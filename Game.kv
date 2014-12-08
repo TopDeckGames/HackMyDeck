@@ -1,0 +1,165 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<InterfaceManager>:
+	pos: (0, 0)
+	top: self.height
+	size: app.window.size
+
+<MenuDialog>:
+	size_hint: (None, None)
+	size: ("250dp", "275dp")
+	GridLayout:
+		pos: root.pos		
+		pos_hint: {'center_x':.5}
+		size_hint: (1, 1)
+		row_force_default: True
+		row_default_height: '50dp'
+		size: self.minimum_size
+		top: self.height
+		spacing: ["10dp", "10dp"]
+		padding: "15dp"
+		cols: 1
+		
+		Button:
+			size_hint: (0.9, 0.25)
+			font_size: '20sp'
+			text: "Quitter"
+			on_press: root.app.quitter()
+			
+		Button:
+			size_hint_x: None
+			width: '200dp'
+			font_size: '20sp'
+			text: "Options"
+			on_press: root.app.configuration()
+			
+		Button:
+			size_hint_x: None
+			width: '200dp'
+			font_size: '20sp'
+			text: "Retour"
+			on_press: root.dismiss()
+			
+<ConfigurationDialog>:
+	general: general
+	graphismes: graphismes
+	audio: audio
+	
+	BoxLayout:
+		orientation: 'vertical'
+	
+		TabbedPanel:
+			size_hint: (1, 0.95)
+			do_default_tab: False
+			
+			TabbedPanelItem:
+				id: general
+				text: 'Général'
+			
+			TabbedPanelItem:
+				id: graphismes
+				text: 'Graphismes'
+				
+				affichage_spinner: affichage_spinner
+				fonds_spinner: fonds_spinner
+				largeur_input: largeur_input
+				hauteur_input: hauteur_input
+				
+				GridLayout:
+					cols: 2
+					padding: 10
+					spacing: 10
+					row_default_height: "40dp"
+					row_force_default: True
+					
+					Label:
+						text: "Mode d'affichage"
+					Spinner:
+						id: affichage_spinner
+						text: ""
+						
+					Label:
+						text: "Résolution"
+					Label:
+						text: ""
+
+					Label:
+						text: "Largeur"
+					TextInput:
+						id: largeur_input
+						
+					Label:
+						text: "Hauteur"
+					TextInput:
+						id: hauteur_input
+						
+					Label:
+						text: "Fonds animés"
+					Spinner:
+						id: fonds_spinner
+						text: ""
+				
+			TabbedPanelItem:
+				id: audio
+				text: 'Audio'
+				
+				general_slider: general_slider
+				musique_slider: musique_slider
+				effets_slider: effets_slider
+				switch_sonsActifs: switch_sonsActifs
+				
+				GridLayout:
+					cols: 2
+					padding: 10
+					spacing: 10
+					row_default_height: "40dp"
+					row_force_default: True
+					
+					Label:
+						font_size: '16sp'
+						text: "Activer sons"
+					Switch:
+						id: switch_sonsActifs
+						height: "5dp"
+					
+					Label:
+						font_size: '16sp'
+						text: "Volume général"
+						
+					Slider:
+						id: general_slider
+						height: "5dp"
+						min: 0
+						max: 100
+						
+					Label:
+						font_size: '16sp'
+						text: "Volume des musiques"
+					Slider:
+						id: musique_slider
+						height: "5dp"
+						min: 0
+						max: 100
+						
+					Label:
+						font_size: '16sp'
+						text: "Volume des effets"
+					Slider:
+						id: effets_slider
+						height: "5dp"
+						min: 0
+						max: 100
+			
+		BoxLayout:
+			size_hint: (0.5, 0.05)
+			pos_hint: {'center_x':.75}
+			orientation: 'horizontal'
+			
+			Button:
+				text: 'Enregistrer'
+				on_press: root.enregistrer()
+				
+			Button:
+				text: 'Retour'
+				on_press: root.dismiss()

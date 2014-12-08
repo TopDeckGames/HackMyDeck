@@ -1,0 +1,45 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<QGScreen>:
+	size_hint: (1, 1)
+	pos: (0, 0)
+
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: 'vertical'
+
+		BoxLayout:
+			id: topLayout
+			size_hint: (None, None)
+			size: (root.width, "50dp")
+			pos_hint: {'top':1}
+			orientation: 'horizontal'
+			
+			canvas:
+				Rectangle:
+					source: 'Images/bar.jpg'
+					pos: self.pos
+					size: self.size
+			
+			Label:
+				size_hint: (None, None)
+				size: (topLayout.width / 2.25, topLayout.height)
+				pos_hint: {'left':1}
+				text: "Bienvenue KikooDu38"
+				halign: "left"
+				color: (0, 0, 0, 1)
+				font_size: "20sp"
+				
+			Button:
+				size_hint: (None, None)
+				size: ("110dp", topLayout.height)
+				text: "Fight !"
+			
+			
+				
+		BoxLayout:
+			size_hint: (1, 1)
+			pos: root.pos
+			orientation: 'horizontal'

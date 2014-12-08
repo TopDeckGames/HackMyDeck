@@ -1,0 +1,74 @@
+#:kivy 1.8
+#:import kivy kivy
+
+[ConnexionInput@TextInput]
+	id: ctx.id
+	size_hint_x: None
+    width: '200dp'
+	multiline: False
+	font_size: '30sp'
+	password: ctx.password
+	
+[ConnexionLabel@Label]
+	size_hint_x: None
+	width: '200dp'
+	font_size: '20sp'
+	text: ctx.text
+	
+<ConnexionScreen>:
+	canvas:
+		Rectangle:
+			source: 'Images/Connexion/temp.jpg'
+			pos: self.pos
+			size: self.size
+	GridLayout:
+		id: grid
+		canvas:
+			Color: 
+				rgba: 0.103, 0.102, 0.105, 1
+			Rectangle:
+				pos: self.pos
+				size: self.size
+			
+		pos: (app.window.size[0] / 2 - self.size[0] / 2, app.window.size[1] / 2 - self.size[1] / 2)		
+		pos_hint: {'center_x':.5}
+		size_hint: (None, None)
+		row_force_default: True
+		row_default_height: '50dp'
+		size: self.minimum_size
+		top: self.height
+		spacing: ["10dp", "10dp"]
+		padding: "15dp"
+		cols: 3
+		
+		ConnexionLabel:
+			text: "Username"
+			
+		ConnexionInput:
+			id: username
+			password: False
+			
+		Button:
+			size_hint_x: None
+			width: '200dp'
+			font_size: '20sp'
+			text: "Inscription"
+			on_press: root.inscription()
+			
+		ConnexionLabel:
+			text: "Password"
+			
+		ConnexionInput:
+			id: password
+			password: True
+			
+		Button:		
+			size_hint_x: None
+			width: '200dp'
+			font_size: '20sp'
+			text: "Connexion"
+			on_press: root.connexion(username, password)
+			
+<ConnexionPopup>:
+	size_hint: (None, None)
+	size: ('300dp', '150dp')

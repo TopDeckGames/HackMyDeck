@@ -1,0 +1,3 @@
+title=Game
+author=Emile
+orientation=landscape

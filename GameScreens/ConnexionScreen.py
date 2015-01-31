@@ -4,10 +4,11 @@
 Module servant d'ecran de connexion
 """
 
-__author__ =  'Emile Taverne'
-__version__=  '0.1'
+__author__ = 'Emile Taverne'
+__version__ = '0.1'
 
 import kivy
+
 kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
@@ -19,31 +20,49 @@ from kivy.uix.image import Image
 
 from GameScreen import GameScreen
 
+from TcpCommunication import TcpClient
+from TcpCommunication import TcpRequest
+
 Builder.load_file("GameScreens/ConnexionScreen.kv")
 
-class ConnexionScreen(GameScreen):
-	"""Widget principal de l'ecran, herite de la classe mere des ecrans"""	
-	def connexion(self, username, password):
-		"""Methode de connexion de l'utilisateur
-		
-		Arguments:
-			username -- Identifiant de l'utilisateur
-			password -- Mot de passe de l'utilisateur"""
-		popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
-		popup.open()
-	
-		if username.text == "test" and password.text == "test":
-			popup.dismiss()
-			self.app.changeScreen("QGScreen");
-		else:
-			password.text = ""
-			popup.dismiss()
-			popup = ConnexionPopup(content=Label(text="Identifiants incorrects"), title="Avertissement")
-			popup.open()
 
-	def inscription(self):
-		pass
-		
+class ConnexionScreen(GameScreen):
+    """Widget principal de l'ecran, herite de la classe mere des ecrans"""
+
+    def connexion(self, username, password):
+        """Methode de connexion de l'utilisateur
+
+        Arguments:
+            username -- Identifiant de l'utilisateur
+            password -- Mot de passe de l'utilisateur"""
+
+        try:
+            tcpClient = TcpClient.TcpClient("127.0.0.1", 3000)
+            tcpRequest = TcpRequest.TcpRequest(40)
+            tcpRequest.addData("HH", (1, 0))
+            tcpRequest.setManager(1)
+            tcpClient.send(tcpRequest)
+            tcpClient.close()
+        except Exception as ex:
+            print ex.message
+
+        popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
+        popup.open()
+
+        if username.text == "test" and password.text == "test":
+            popup.dismiss()
+            self.app.changeScreen("QGScreen");
+        else:
+            password.text = ""
+            popup.dismiss()
+            popup = ConnexionPopup(content=Label(text="Identifiants incorrects"), title="Avertissement")
+            popup.open()
+
+
+    def inscription(self):
+        pass
+
+
 class ConnexionPopup(Popup):
-	"""Widget popup definit dans le fichier .kv"""
-	pass
+    """Widget popup definit dans le fichier .kv"""
+    pass

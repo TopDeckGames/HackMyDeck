@@ -54,8 +54,7 @@ class TcpRequest:
 
         str = struct.Struct("<c")
         data = str.pack(("0"))
-        print data
-        print values
+
         while len(values) % self.dataSize != 0:
             values += data
 

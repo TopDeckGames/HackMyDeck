@@ -20,9 +20,6 @@ from kivy.uix.image import Image
 
 from GameScreen import GameScreen
 
-from TcpCommunication import TcpClient
-from TcpCommunication import TcpRequest
-
 Builder.load_file("GameScreens/ConnexionScreen.kv")
 
 
@@ -35,16 +32,6 @@ class ConnexionScreen(GameScreen):
         Arguments:
             username -- Identifiant de l'utilisateur
             password -- Mot de passe de l'utilisateur"""
-
-        try:
-            tcpClient = TcpClient.TcpClient("127.0.0.1", 3000)
-            tcpRequest = TcpRequest.TcpRequest(40)
-            tcpRequest.addData("HH", (1, 0))
-            tcpRequest.setManager(1)
-            tcpClient.send(tcpRequest)
-            tcpClient.close()
-        except Exception as ex:
-            print ex.message
 
         popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
         popup.open()

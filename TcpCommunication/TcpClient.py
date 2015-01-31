@@ -45,5 +45,5 @@ class TcpClient:
         else:
             raise Exception("Un object de type TcpRequest est requis")
 
-        self.requests += (request)
+        self.requests += (request,)
         self.token += 1

@@ -72,3 +72,33 @@
 <ConnexionPopup>:
 	size_hint: (None, None)
 	size: ('300dp', '150dp')
+
+
+<RegisterPopup>:
+	ConnexionLabel:
+		text: "Username"
+	ConnexionInput:
+		id: username
+
+	ConnexionLabel:
+	    text: "Password"
+	ConnexionInput:
+		id: password
+		password: True
+
+	ConnexionLabel:
+		text: "Name"
+	ConnexionInput:
+		id: name
+
+	ConnexionLabel:
+		text: "First Name"
+	ConnexionInput:
+		id: firstName
+
+	Button:
+		size_hint_x: None
+		width: '200dp'
+		font_size: '20sp'
+		text: "Register"
+

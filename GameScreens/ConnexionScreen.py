@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """
 Module servant d'ecran de connexion
@@ -12,11 +13,11 @@ import kivy
 kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.image import Image
+
+from TcpCommunication.TcpClient import TcpClient
 
 from GameScreen import GameScreen
 
@@ -25,6 +26,17 @@ Builder.load_file("GameScreens/ConnexionScreen.kv")
 
 class ConnexionScreen(GameScreen):
     """Widget principal de l'ecran, herite de la classe mere des ecrans"""
+
+    def __init__(self, **kwargs):
+        super(ConnexionScreen, self).__init__(**kwargs)
+
+        try:
+            if type(self.app.tcpClient) is TcpClient:
+                self.app.close()
+
+            self.app.tcpClient = TcpClient("etaverne.ddns.net", 3000)
+        except Exception as ex:
+            self.showError(ex)
 
     def connexion(self, username, password):
         """Methode de connexion de l'utilisateur
@@ -38,7 +50,7 @@ class ConnexionScreen(GameScreen):
 
         if username.text == "test" and password.text == "test":
             popup.dismiss()
-            self.app.changeScreen("QGScreen");
+            self.app.changeScreen("QGScreen")
         else:
             password.text = ""
             popup.dismiss()
@@ -47,9 +59,29 @@ class ConnexionScreen(GameScreen):
 
 
     def inscription(self):
-        pass
+        self.popup = RegisterPopup(title="Inscription", auto_dismiss=False)
+        self.popup.ids.action.bind(on_press=self.register)
+        self.popup.open()
 
+    def register(self, object):
+        if self.popup.ids.username.text.strip() == "":
+            pass
+        elif self.popup.ids.password.text.strip() == "":
+            pass
+        elif self.popup.ids.name.text.strip() == "":
+            pass
+        elif self.popup.ids.firstName.text.strip() == "":
+            pass
+        else:
+            self.popup.dismiss()
+            self.popup = ConnexionPopup(content=Label(text="Inscription effectuée"), title="Information")
+            self.popup.open()
 
 class ConnexionPopup(Popup):
+    """Widget popup definit dans le fichier .kv"""
+    pass
+
+
+class RegisterPopup(Popup):
     """Widget popup definit dans le fichier .kv"""
     pass

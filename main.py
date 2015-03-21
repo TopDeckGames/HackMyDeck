@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """
 Module permettant le lancement de l'application et sa configuration
@@ -13,24 +14,27 @@ kivy.require('1.8.0')
 
 from kivy.app import App
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty, StringProperty, NumericProperty
+from kivy.properties import ObjectProperty
 
-from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy import platform
 
 import os
 import sys
 import ConfigParser
-import math
+
+if platform == 'win':
+    from win32api import GetSystemMetrics
 
 from GameScreens.ConnexionScreen import ConnexionScreen
 from GameScreens.QGScreen import QGScreen
+from GameScreens.GameScreen import GameScreen
 
-fichierConfig = "config.ini";
+fichierConfig = "config.ini"
 
 if getattr(sys, 'frozen', False):
     application_path = os.path.dirname(sys.executable)
@@ -60,7 +64,7 @@ class Game(App):
         EventLoop.ensure_window()
         self.window = EventLoop.window
 
-        self.root = InterfaceManager()
+        self.root = InterfaceManager(app=self)
 
         self.configurer()
 
@@ -101,9 +105,14 @@ class Game(App):
 
     def macosxConfig(self):
         """Configuration des sytemes osx"""
-        self.window.fullscreen = self.Config.get("Graphismes", "ScreenMode") == "Fullscreen"
-        self.window.borderless = self.Config.get("Graphismes", "ScreenMode") == "Borderless"
-        self.window.size = (int(self.Config.get("Graphismes", "Width")), int(self.Config.get("Graphismes", "Height")))
+        if self.Config.get("Graphismes", "ScreenMode") == "Fullscreen":
+            self.window.size = (1280, 800)
+            self.window.fullscreen = True
+        else:
+            self.window.fullscreen = False
+            self.window.borderless = False
+            self.window.size = (
+                int(self.Config.get("Graphismes", "Width")), int(self.Config.get("Graphismes", "Height")))
 
         self.root.keyboard = Window.request_keyboard(self.root.keyboard_closed, self.root)
         self.root.keyboard.bind(on_key_down=self.root.on_keyboard_down)
@@ -115,9 +124,15 @@ class Game(App):
 
     def winConfig(self):
         """Configuration des sytemes windows"""
-        self.window.fullscreen = self.Config.get("Graphismes", "ScreenMode") == "Fullscreen"
-        self.window.borderless = self.Config.get("Graphismes", "ScreenMode") == "Borderless"
-        self.window.size = (int(self.Config.get("Graphismes", "Width")), int(self.Config.get("Graphismes", "Height")))
+        if self.Config.get("Graphismes", "ScreenMode") == "Fullscreen":
+            self.window.size = (min(GetSystemMetrics(0), 1920), min(GetSystemMetrics(1), 1080))
+            self.window.borderless = True
+            self.window.fullscreen = "fake"
+        else:
+            self.window.fullscreen = False
+            self.window.borderless = False
+            self.window.size = (
+                int(self.Config.get("Graphismes", "Width")), int(self.Config.get("Graphismes", "Height")))
 
         self.root.keyboard = Window.request_keyboard(self.root.keyboard_closed, self.root)
         self.root.keyboard.bind(on_key_down=self.root.on_keyboard_down)
@@ -131,6 +146,8 @@ class Game(App):
 class InterfaceManager(FloatLayout):
     """Widget gerant les differents ecrans qui peuvent etre affiches"""
     app = ObjectProperty(None)
+    gameScreen = ObjectProperty(None)
+    tcpClient = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         """Initialisation et affiche l'ecran de connexion"""
@@ -152,16 +169,26 @@ class InterfaceManager(FloatLayout):
 
         Arguments:
             screen -- Nom de l'ecran a afficher"""
+
+        if self.gameScreen is not None:
+            self.gameScreen.hide()
+
+            while self.gameScreen.visible:
+                continue
         self.clear_widgets()
+
         if screen == "ConnexionScreen":
-            self.add_widget(ConnexionScreen(app=self))
+            self.gameScreen = ConnexionScreen(app=self, opacity=0)
         elif screen == "QGScreen":
-            self.add_widget(QGScreen(app=self))
+            self.gameScreen = QGScreen(app=self, opacity=0)
         elif screen == "GameScreen":
-            self.add_widget(GameScreen(app=self))
+            self.gameScreen = GameScreen(app=self, opacity=0)
         else:
             print "GameScreen inconnu : ", screen
             self.changeScreen("ConnexionScreen")
+
+        self.add_widget(self.gameScreen)
+        self.gameScreen.show()
         self.build()
 
     def keyboard_closed(self):
@@ -214,7 +241,7 @@ class ConfigurationDialog(Popup):
         """Rempli les differents formulaires avec les valeurs enregistrees"""
         # Graphismes
         self.graphismes.affichage_spinner.text = self.Config.get("Graphismes", "ScreenMode")
-        self.graphismes.affichage_spinner.values = ("Fullscreen", "Borderless", "Windowed")
+        self.graphismes.affichage_spinner.values = ("Fullscreen", "Windowed")
         self.graphismes.fonds_spinner.text = "Actif" if self.Config.getboolean("Graphismes",
                                                                                "FondsAnimes") else "Inactif"
         self.graphismes.fonds_spinner.values = ("Actif", "Inactif")
@@ -254,11 +281,6 @@ class ConfigurationDialog(Popup):
 
     def on_dismiss(self):
         self.etat = False
-
-    def intInput(self, substring, from_undo=False):
-        result = re.match('(\\d+)', substring)
-        if result:
-            self.insert_text(s, from_undo=from_undo)
 
 
 class MenuDialog(Popup):

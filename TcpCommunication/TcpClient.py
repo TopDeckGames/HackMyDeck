@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """
 Module permettant la communication avec les serveurs C#
@@ -8,6 +9,7 @@ __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
 import socket
+
 import TcpRequest
 
 

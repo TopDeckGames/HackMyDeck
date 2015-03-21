@@ -1,0 +1,29 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<ErrorScreen>:
+    canvas:
+        Color:
+            rgba: 0.237, 0.220, 0.168, 1
+        Rectangle:
+            pos: root.pos
+            size: root.size
+
+	cols: 1
+
+    GridLayout:
+		pos: root.pos
+		size: root.size
+
+		cols: 1
+
+		Label:
+			text: "OUPS :'("
+			font_size: "50sp"
+
+		Label:
+			text: "Une erreur est survenue, veuillez nous excuser pour la gene occasionnee"
+			font_size: "25sp"
+
+		Label:
+			text: root.debug

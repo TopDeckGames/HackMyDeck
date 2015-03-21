@@ -13,15 +13,15 @@ import hashlib
 
 class TcpRequest:
     structString = ""
-    structData = ()
+    structData = []
 
     def __init__(self, dataSize):
         self.dataSize = dataSize
 
     def addData(self, struc, data):
         try:
-            self.structString = struc + self.structString
-            self.structData = data + self.structData
+            self.structString = self.structString + struc
+            self.structData.append(data)
         except Exception as ex:
             raise ex
 

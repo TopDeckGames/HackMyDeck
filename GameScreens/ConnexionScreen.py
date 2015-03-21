@@ -21,6 +21,8 @@ from TcpCommunication.TcpClient import TcpClient
 
 from GameScreen import GameScreen
 
+from Controllers.UserController import UserController
+
 Builder.load_file("GameScreens/ConnexionScreen.kv")
 
 
@@ -34,7 +36,7 @@ class ConnexionScreen(GameScreen):
             if type(self.app.tcpClient) is TcpClient:
                 self.app.close()
 
-            self.app.tcpClient = TcpClient("etaverne.ddns.net", 3000)
+            self.app.tcpClient = TcpClient("127.0.0.1", 3000)
         except Exception as ex:
             self.showError(ex)
 
@@ -48,15 +50,14 @@ class ConnexionScreen(GameScreen):
         popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
         popup.open()
 
-        if username.text == "test" and password.text == "test":
-            popup.dismiss()
-            self.app.changeScreen("QGScreen")
-        else:
-            password.text = ""
+        try:
+            userController = UserController(app=self.app)
+            userController.connexion(username.text, password.text)
+        except Exception as ex:
             popup.dismiss()
             popup = ConnexionPopup(content=Label(text="Identifiants incorrects"), title="Avertissement")
+            print ex.message
             popup.open()
-
 
     def inscription(self):
         self.popup = RegisterPopup(title="Inscription", auto_dismiss=False)

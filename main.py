@@ -34,6 +34,8 @@ from GameScreens.ConnexionScreen import ConnexionScreen
 from GameScreens.QGScreen import QGScreen
 from GameScreens.GameScreen import GameScreen
 
+from TcpCommunication.TcpClient import TcpClient
+
 fichierConfig = "config.ini"
 
 if getattr(sys, 'frozen', False):
@@ -52,6 +54,7 @@ class Game(App):
 
     title = Config.get("General", "Titre")
     icon = Config.get("General", "Icon")
+    APPLICATION_ENV = ""
 
     def build(self):
         """Configure l'affichage selon le systeme d'exploitation courrant et initialise le widget de base"""
@@ -70,6 +73,8 @@ class Game(App):
 
     def configurer(self):
         from kivy import platform
+
+        self.APPLICATION_ENV = self.Config.get("General", "Env")
 
         if platform == 'linux':
             self.linuxConfig()
@@ -219,6 +224,9 @@ class InterfaceManager(FloatLayout):
 
     def quitter(self):
         """Ferme l'application"""
+        if type(self.tcpClient) is TcpClient:
+            self.tcpClient.close()
+
         App.get_running_app().stop()
 
 

@@ -34,7 +34,7 @@ from GameScreens.ConnexionScreen import ConnexionScreen
 from GameScreens.QGScreen import QGScreen
 from GameScreens.GameScreen import GameScreen
 
-from TcpCommunication.TcpClient import TcpClient
+from TcpCommunication.Manager import Manager
 
 fichierConfig = "config.ini"
 
@@ -152,7 +152,7 @@ class InterfaceManager(FloatLayout):
     """Widget gerant les differents ecrans qui peuvent etre affiches"""
     app = ObjectProperty(None)
     gameScreen = ObjectProperty(None)
-    tcpClient = ObjectProperty(None)
+    tcpManager = Manager()
 
     def __init__(self, **kwargs):
         """Initialisation et affiche l'ecran de connexion"""
@@ -224,9 +224,7 @@ class InterfaceManager(FloatLayout):
 
     def quitter(self):
         """Ferme l'application"""
-        if type(self.tcpClient) is TcpClient:
-            self.tcpClient.close()
-
+        self.tcpManager.close()
         App.get_running_app().stop()
 
 

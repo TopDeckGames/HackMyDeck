@@ -12,6 +12,7 @@ from threading import Thread
 
 class TcpListener(Thread):
     buffer = ""
+    running = True
 
     def __init__(self, soc, size):
         Thread.__init__(self)
@@ -19,8 +20,8 @@ class TcpListener(Thread):
         self.dataSize = size
 
     def run(self):
-        while(True):
+        while (self.running):
             try:
-                data = self.soc.recv(self.dataSize)
+                buffer += str(self.soc.recv(self.dataSize))
             except Exception as ex:
-                raise ex
+                return

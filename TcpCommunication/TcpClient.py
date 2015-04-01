@@ -15,7 +15,7 @@ import TcpRequest
 
 class TcpClient:
     token = 0
-    requests = ()
+    TOKEN_LIST = []
 
     def __init__(self, address, port):
         self.port = port
@@ -33,13 +33,16 @@ class TcpClient:
         except Exception as ex:
             raise ex
 
-    def send(self, request):
+    def send(self, request, callback):
+        # On teste le type de l'objet
         if isinstance(request, TcpRequest.TcpRequest):
             try:
+                #On construit la requ�te
                 request.build(self.token)
             except Exception as ex:
                 raise Exception("Erreur lors de la construction de la requete " + ex.message)
 
+            #Envoi
             try:
                 self.soc.send(request.getRequest())
             except Exception as ex:
@@ -47,5 +50,6 @@ class TcpClient:
         else:
             raise Exception("Un object de type TcpRequest est requis")
 
-        self.requests += (request,)
+        #On enregistre le token et la fonction de retour dans la liste
+        TcpClient.TOKEN_LIST.append((self.token, callback))
         self.token += 1

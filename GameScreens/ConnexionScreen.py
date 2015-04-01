@@ -17,7 +17,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 
-from TcpCommunication.TcpClient import TcpClient
+from TcpCommunication.Manager import Manager
 
 from GameScreen import GameScreen
 
@@ -32,11 +32,10 @@ class ConnexionScreen(GameScreen):
     def __init__(self, **kwargs):
         super(ConnexionScreen, self).__init__(**kwargs)
 
+        # A l'arrivée sur l'écran de connexion on se connecte au serveur de login
         try:
-            if type(self.app.tcpClient) is TcpClient:
-                self.app.close()
-
-            self.app.tcpClient = TcpClient("127.0.0.1", 3000)
+            self.app.tcpManager.close()
+            self.app.tcpManager.connect(Manager.SERVEUR_LOGIN)
         except Exception as ex:
             self.showError(ex)
 
@@ -77,6 +76,7 @@ class ConnexionScreen(GameScreen):
             self.popup.dismiss()
             self.popup = ConnexionPopup(content=Label(text="Inscription effectuée"), title="Information")
             self.popup.open()
+
 
 class ConnexionPopup(Popup):
     """Widget popup definit dans le fichier .kv"""

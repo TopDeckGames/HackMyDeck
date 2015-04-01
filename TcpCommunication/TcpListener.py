@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -10,8 +10,11 @@ __version__ = '0.1'
 
 from threading import Thread
 
+
 class TcpListener(Thread):
     buffer = ""
+    running = True
+    dataSize = 0
 
     def __init__(self, soc, size):
         Thread.__init__(self)
@@ -19,8 +22,8 @@ class TcpListener(Thread):
         self.dataSize = size
 
     def run(self):
-        while(True):
+        while (self.running):
             try:
-                data = self.soc.recv(self.dataSize)
+                self.buffer += str(self.soc.recv(self.dataSize))
             except Exception as ex:
-                raise ex
+                return

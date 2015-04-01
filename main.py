@@ -34,7 +34,7 @@ from GameScreens.ConnexionScreen import ConnexionScreen
 from GameScreens.QGScreen import QGScreen
 from GameScreens.GameScreen import GameScreen
 
-from TcpCommunication.TcpClient import TcpClient
+from TcpCommunication.Manager import Manager
 
 fichierConfig = "config.ini"
 
@@ -152,7 +152,7 @@ class InterfaceManager(FloatLayout):
     """Widget gerant les differents ecrans qui peuvent etre affiches"""
     app = ObjectProperty(None)
     gameScreen = ObjectProperty(None)
-    tcpClient = ObjectProperty(None)
+    tcpManager = Manager()
 
     def __init__(self, **kwargs):
         """Initialisation et affiche l'ecran de connexion"""
@@ -224,9 +224,7 @@ class InterfaceManager(FloatLayout):
 
     def quitter(self):
         """Ferme l'application"""
-        if type(self.tcpClient) is TcpClient:
-            self.tcpClient.close()
-
+        self.tcpManager.close()
         App.get_running_app().stop()
 
 
@@ -256,7 +254,7 @@ class ConfigurationDialog(Popup):
         self.graphismes.largeur_input.text = self.Config.get("Graphismes", "Width")
         self.graphismes.hauteur_input.text = self.Config.get("Graphismes", "Height")
 
-        #Audio
+        # Audio
         self.audio.switch_sonsActifs.active = self.Config.getboolean("Audio", "Actif")
         self.audio.general_slider.value = int(self.Config.get("Audio", "VolumeGeneral"))
         self.audio.musique_slider.value = int(self.Config.get("Audio", "VolumeMusique"))
@@ -270,7 +268,7 @@ class ConfigurationDialog(Popup):
         self.Config.set("Graphismes", "Width", int(self.graphismes.largeur_input.text))
         self.Config.set("Graphismes", "Height", int(self.graphismes.hauteur_input.text))
 
-        #Audio
+        # Audio
         self.Config.set("Audio", "Actif", self.audio.switch_sonsActifs.active)
         self.Config.set("Audio", "VolumeGeneral", int(self.audio.general_slider.value))
         self.Config.set("Audio", "VolumeMusique", int(self.audio.musique_slider.value))

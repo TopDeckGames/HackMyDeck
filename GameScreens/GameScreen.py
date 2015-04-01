@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -29,7 +29,6 @@ class GameScreen(Widget):
 
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
-        self.size = self.app.app.window.size
 
     def show(self):
         anim = Animation(opacity=1, duration=1)

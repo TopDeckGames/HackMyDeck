@@ -11,6 +11,7 @@ __version__ = '0.1'
 import struct
 import hashlib
 
+
 class TcpRequest:
     structString = ""
     structData = []
@@ -31,7 +32,7 @@ class TcpRequest:
     def build(self, token):
         self.token = token
 
-        #On construit la structure des donnees a partir des elements enregistres
+        # On construit la structure des donnees a partir des elements enregistres
         self.sData = struct.Struct("<" + self.structString)
         try:
             self.data = self.sData.pack(*self.structData)

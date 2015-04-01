@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import kivy
@@ -11,13 +11,13 @@ from kivy.properties import ObjectProperty, StringProperty
 
 Builder.load_file("GameScreens/ErrorScreen.kv")
 
+
 class ErrorScreen(GridLayout):
     app = ObjectProperty()
     debug = StringProperty()
 
     def __init__(self, **kwargs):
         super(GridLayout, self).__init__(**kwargs)
-        self.size = self.app.app.window.size
 
     def setDebugMessage(self, message):
         if self.app.app.APPLICATION_ENV != "PROD" and self.app.app.APPLICATION_ENV != "PREPROD":

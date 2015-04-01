@@ -7,6 +7,8 @@ __version__ = '0.1'
 from kivy.properties import ObjectProperty, NumericProperty
 from kivy.uix.widget import Widget
 
+import struct
+
 
 class BaseController(Widget):
     app = ObjectProperty(None)
@@ -14,3 +16,13 @@ class BaseController(Widget):
 
     def __init__(self, **kwargs):
         super(BaseController, self).__init__(**kwargs)
+
+    def verifyResponse(self, data):
+        if len(data) == 4:
+            response = struct.unpack('i', data)
+            print response
+
+            if response[0] == 1:
+                return True
+
+        return False

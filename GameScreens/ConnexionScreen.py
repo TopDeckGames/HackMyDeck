@@ -46,17 +46,17 @@ class ConnexionScreen(GameScreen):
             username -- Identifiant de l'utilisateur
             password -- Mot de passe de l'utilisateur"""
 
-        popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
-        popup.open()
+        self.popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Connexion", auto_dismiss=False)
+        self.popup.open()
 
         try:
             userController = UserController(app=self.app)
             userController.connexion(username.text, password.text)
         except Exception as ex:
-            popup.dismiss()
-            popup = ConnexionPopup(content=Label(text="Identifiants incorrects"), title="Avertissement")
+            self.popup.dismiss()
+            self.popup = ConnexionPopup(content=Label(text="Connexion impossible"), title="Avertissement")
             print ex.message
-            popup.open()
+            self.popup.open()
 
     def inscription(self):
         self.popup = RegisterPopup(title="Inscription", auto_dismiss=False)
@@ -73,10 +73,28 @@ class ConnexionScreen(GameScreen):
         elif self.popup.ids.firstName.text.strip() == "":
             pass
         else:
+            login = self.popup.ids.username.text
+            password = self.popup.ids.password.text
+            firstname = self.popup.ids.firstName.text
+            lastname = self.popup.ids.name.text
+
             self.popup.dismiss()
-            self.popup = ConnexionPopup(content=Label(text="Inscription effectuée"), title="Information")
+            self.popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Inscription", auto_dismiss=False)
             self.popup.open()
 
+            try:
+                userController = UserController(app=self.app)
+                userController.register(login, password, firstname, lastname)
+            except Exception as ex:
+                self.popup.dismiss()
+                self.popup = ConnexionPopup(content=Label(text="Inscription impossible"), title="Avertissement")
+                print ex.message
+                self.popup.open()
+
+    def displayMessage(self, message, type):
+        self.popup.dismiss()
+        self.popup = ConnexionPopup(content=Label(text=message), title=type)
+        self.popup.open()
 
 class ConnexionPopup(Popup):
     """Widget popup definit dans le fichier .kv"""

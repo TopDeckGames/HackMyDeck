@@ -37,7 +37,7 @@ class TcpClient:
         # On teste le type de l'objet
         if isinstance(request, TcpRequest.TcpRequest):
             try:
-                #On construit la requ�te
+                #On construit la requête
                 request.build(self.token)
             except Exception as ex:
                 raise Exception("Erreur lors de la construction de la requete " + ex.message)

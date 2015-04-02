@@ -6,7 +6,7 @@ Module permettant de construire une requete a envoyer au serveur
 """
 
 __author__ = 'Emile Taverne'
-__version__ = '0.1'
+__version__ = '0.3'
 
 import struct
 import hashlib
@@ -18,6 +18,7 @@ class TcpRequest:
 
     def __init__(self, dataSize):
         self.dataSize = dataSize
+        self.structData = []
 
     def addData(self, struc, data):
         try:

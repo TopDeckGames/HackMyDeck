@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Emile Taverne'
-__version__ = '0.1'
+__version__ = '0.2'
 
 from kivy.properties import ObjectProperty, NumericProperty
 from kivy.uix.widget import Widget
@@ -20,7 +20,6 @@ class BaseController(Widget):
     def verifyResponse(self, data):
         if len(data) == 4:
             response = struct.unpack('i', data)
-            print response
 
             if response[0] == 1:
                 return True

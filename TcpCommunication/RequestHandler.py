@@ -1,4 +1,4 @@
-﻿﻿#!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -37,12 +37,13 @@ class RequestHandler(Thread):
                 message = self.tcpListener.buffer[:self.message_length]
                 self.tcpListener.buffer = self.tcpListener.buffer[self.message_length:]
 
-                #On déchiffre les données
-                header = struct.unpack('Ii32s', message)
+                # On déchiffre les données
+                header = struct.unpack('@IHH32s', message)
 
                 token = header[0]
                 size = header[1]
-                checksum = header[2]
+                state = header[2]
+                checksum = header[3]
 
                 #On attend qu'il y ai assez de données
                 while len(self.tcpListener.buffer) < size:
@@ -54,7 +55,10 @@ class RequestHandler(Thread):
                 if hashlib.md5(message).hexdigest() != checksum:
                     continue
                 #Sinon on enlève le message du buffer pour le traiter
-                self.tcpListener.buffer = self.tcpListener.buffer[size:]
+                nbPart = size / self.message_length
+                if size % self.message_length > 0:
+                    nbPart += 1
+                self.tcpListener.buffer = self.tcpListener.buffer[self.message_length * nbPart:]
 
                 #On récupère l'action à réaliser selon le token donné
                 action = None
@@ -65,4 +69,4 @@ class RequestHandler(Thread):
                 #Si une action a étée trouvée on supprime l'élèment de la liste et on exécute l'action
                 if action is not None:
                     TcpClient.TOKEN_LIST.remove(action)
-                    action[1](message)
+                    action[1](state, message)

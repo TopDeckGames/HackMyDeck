@@ -2,14 +2,18 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Emile Taverne'
-__version__ = '0.1'
+__version__ = '0.3'
 
 import hashlib
+import struct
 
 from Controllers.BaseController import BaseController
+
 from TcpCommunication.TcpRequest import TcpRequest
 from TcpCommunication.Manager import Manager
+
 from Model.User import User
+
 from Helper.StringHelper import StringHelper
 
 
@@ -22,22 +26,89 @@ class UserController(BaseController):
         if login.strip() == "" or password.strip() == "":
             raise Exception("Login ou mot de passe non valide")
 
+        # Cryptage du mot de passe
         m = hashlib.md5()
         m.update(password)
         hash_password = m.digest()
 
+        # On complète les chaines de charactères pour qu'elles fassent la longueur maximale
         login = StringHelper().CompleteString(login, User.LOGIN_LENGTH)
 
+        #Préparation de la requête
         req = TcpRequest(Manager.MESSAGE_LENGTH)
         req.setManager(self.managerId)
-        req.addData("H", 1)
-        req.addData(str(len(login)) + "s", login)
-        req.addData(str(len(hash_password)) + "s", hash_password)
+        req.addData("H", 1)  #Identifiant de la méthode distante à appeler
+        #Ajout des données
+        req.addData(str(User.LOGIN_LENGTH) + "s", login)
+        req.addData(str(User.PASSWORD_LENGTH) + "s", hash_password)
 
+        #Envoi
         self.app.tcpManager.tcpClient.send(req, self.callback1)
 
-    def connexionResp(self, data):
-        if self.verifyResponse(data[:4]):
-            print "Ok"
+    def connexionResp(self, state, data):
+        # On vérifie qu'il n'y a pas eu d'erreur technique
+        if state == 1:
+            #On vérifie que la requête a bien étée un succés
+            if self.verifyResponse(data[:4]):
+                data = data[4:]
 
+                try:
+                    #On récupère les informations du joueur
+                    response = struct.unpack('iii', data)
+
+                    userId = response[0]
+                    server = response[1]
+                    port = response[2]
+
+                    #On enregistre le serveur de gestion à contacter
+                    Manager.SERVEUR_GESTION = (server, port)
+                    #Changement d'écran
+                    self.app.changeScreen("QGScreen")
+                except Exception as ex:
+                    pass
+
+            self.app.gameScreen.displayMessage("Identifiants incorrects", "Avertissement")
+
+        else:
+            self.app.gameScreen.displayMessage("Connexion impossible", "Avertissement")
+
+    def register(self, login, password, firstname, lastname):
+        if login.strip() == "" or password.strip() == "" or firstname.strip() == "" or lastname.strip() == "":
+            raise Exception("Donnée manquante")  # Cryptage du mot de passe
+
+        m = hashlib.md5()
+        m.update(password)
+        hash_password = m.digest()
+
+        # On complète les chaines de charactères pour qu'elles fassent la longueur maximale
+        login = StringHelper().CompleteString(login, User.LOGIN_LENGTH)
+        firstname = StringHelper().CompleteString(firstname, User.FIRSTNAME_LENGTH)
+        lastname = StringHelper().CompleteString(lastname, User.LASTNAME_LENGTH)
+
+        #Préparation de la requête
+        req = TcpRequest(Manager.MESSAGE_LENGTH)
+        req.setManager(self.managerId)
+        req.addData("H", 2)  #Identifiant de la méthode distante à appeler
+        #Ajout des données
+        req.addData(str(User.LOGIN_LENGTH) + "s", login)
+        req.addData(str(User.PASSWORD_LENGTH) + "s", hash_password)
+        req.addData(str(User.FIRSTNAME_LENGTH) + "s", firstname)
+        req.addData(str(User.LASTNAME_LENGTH) + "s", login)
+
+        #Envoi
+        self.app.tcpManager.tcpClient.send(req, self.callback2)
+
+    def registerResp(self, state, data):
+        #On vérifie qu'il n'y a pas eu d'erreur technique
+        if state == 1:
+            #On vérifie que la requête a bien étée un succés
+            if self.verifyResponse(data[:4]):
+                self.app.gameScreen.displayMessage("Inscription réalisée", "Information")
+
+            self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
+        else:
+            self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
+
+    #Variables contenant les fonction réponse
     callback1 = connexionResp
+    callback2 = registerResp

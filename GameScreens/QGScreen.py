@@ -14,6 +14,8 @@ kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
 
+from TcpCommunication.Manager import Manager
+
 from GameScreen import GameScreen
 
 Builder.load_file("GameScreens/QGScreen.kv")
@@ -21,4 +23,13 @@ Builder.load_file("GameScreens/QGScreen.kv")
 
 class QGScreen(GameScreen):
     """Widget de l'ecran"""
-    pass
+
+    def __init__(self, **kwargs):
+        super(QGScreen, self).__init__(**kwargs)
+
+        # A l'arrivée sur l'écran de gestion on se connecte au serveur attribué
+        try:
+            self.app.tcpManager.close()
+            self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
+        except Exception as ex:
+            self.showError(ex)

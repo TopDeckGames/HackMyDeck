@@ -6,6 +6,7 @@ __version__ = '0.3'
 
 import hashlib
 import struct
+import socket
 
 from Controllers.BaseController import BaseController
 from TcpCommunication.TcpRequest import TcpRequest
@@ -51,31 +52,30 @@ class UserController(BaseController):
 
                 try:
                     #On récupère les informations du joueur
-                    response = struct.unpack('iH', data)
+                    response = struct.unpack('iH', data[:6])
 
                     userId = response[0]
                     flag = response[1]
 
                     # Si il y a un serveur de disponible on le récupère
                     if flag == 1:
-                        data = data[2:]
-                        response = struct.unpack('ii', data)
+                        data = data[6:]
+                        response = struct.unpack('ii', data[:8])
 
                         server = response[0]
                         port = response[1]
 
-                        print server
-
                         #On enregistre le serveur de gestion à contacter
-                        Manager.SERVEUR_GESTION = (server, port)
+                        Manager.SERVEUR_GESTION = (socket.inet_ntoa(struct.pack('L', server)), port)
                         #Changement d'écran
+                        self.app.gameScreen.popup.dismiss()
                         self.app.changeScreen("QGScreen")
                     else:
                         self.app.gameScreen.displayMessage("Aucun serveur disponible, veuillez retenter plus tard",
                                                            "Information")
-                        return
+                    return
                 except Exception as ex:
-                    pass
+                    return
 
             self.app.gameScreen.displayMessage("Identifiants incorrects", "Avertissement")
 

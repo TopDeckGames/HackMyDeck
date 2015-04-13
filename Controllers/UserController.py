@@ -8,12 +8,9 @@ import hashlib
 import struct
 
 from Controllers.BaseController import BaseController
-
 from TcpCommunication.TcpRequest import TcpRequest
 from TcpCommunication.Manager import Manager
-
 from Model.User import User
-
 from Helper.StringHelper import StringHelper
 
 
@@ -54,16 +51,29 @@ class UserController(BaseController):
 
                 try:
                     #On récupère les informations du joueur
-                    response = struct.unpack('iii', data)
+                    response = struct.unpack('iH', data)
 
                     userId = response[0]
-                    server = response[1]
-                    port = response[2]
+                    flag = response[1]
 
-                    #On enregistre le serveur de gestion à contacter
-                    Manager.SERVEUR_GESTION = (server, port)
-                    #Changement d'écran
-                    self.app.changeScreen("QGScreen")
+                    # Si il y a un serveur de disponible on le récupère
+                    if flag == 1:
+                        data = data[2:]
+                        response = struct.unpack('ii', data)
+
+                        server = response[0]
+                        port = response[1]
+
+                        print server
+
+                        #On enregistre le serveur de gestion à contacter
+                        Manager.SERVEUR_GESTION = (server, port)
+                        #Changement d'écran
+                        self.app.changeScreen("QGScreen")
+                    else:
+                        self.app.gameScreen.displayMessage("Aucun serveur disponible, veuillez retenter plus tard",
+                                                           "Information")
+                        return
                 except Exception as ex:
                     pass
 

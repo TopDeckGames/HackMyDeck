@@ -13,6 +13,7 @@ from TcpCommunication.TcpRequest import TcpRequest
 from TcpCommunication.Manager import Manager
 from Model.User import User
 from Helper.StringHelper import StringHelper
+from Manager.GameManager import GameManager
 
 
 class UserController(BaseController):
@@ -54,7 +55,8 @@ class UserController(BaseController):
                     #On récupère les informations du joueur
                     response = struct.unpack('iH', data[:6])
 
-                    userId = response[0]
+                    GameManager.user = User()
+                    GameManager.user.id = response[0]
                     flag = response[1]
 
                     # Si il y a un serveur de disponible on le récupère
@@ -75,6 +77,7 @@ class UserController(BaseController):
                                                            "Information")
                     return
                 except Exception as ex:
+                    print ex.message
                     return
 
             self.app.gameScreen.displayMessage("Identifiants incorrects", "Avertissement")

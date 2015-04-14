@@ -53,3 +53,9 @@ class TcpClient:
         #On enregistre le token et la fonction de retour dans la liste
         TcpClient.TOKEN_LIST.append((self.token, callback))
         self.token += 1
+
+    def sendBytes(self, bytes):
+        try:
+            self.soc.send(bytes)
+        except Exception as ex:
+            raise Exception("Erreur lors de l'envoi de la requete " + ex.message)

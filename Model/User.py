@@ -10,8 +10,9 @@ class User(SuperModel):
     FIRSTNAME_LENGTH = 75
     LASTNAME_LENGTH = 75
 
+    id = None
     login = ""
     password = ""
 
     def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
+        super(type(self), self).__init__(**kwargs)

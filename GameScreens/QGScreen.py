@@ -8,7 +8,10 @@ Module de l'ecran concernant l'interface de gestion
 __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
+import struct
+
 import kivy
+
 
 kivy.require('1.8.0')
 
@@ -17,6 +20,8 @@ from kivy.uix.widget import Builder
 from TcpCommunication.Manager import Manager
 
 from GameScreen import GameScreen
+
+from Manager.GameManager import GameManager
 
 Builder.load_file("GameScreens/QGScreen.kv")
 
@@ -31,5 +36,9 @@ class QGScreen(GameScreen):
         try:
             self.app.tcpManager.close()
             self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
+
+            sData = struct.Struct("<i")
+            data = sData.pack(*[GameManager.user.id])
+            self.app.tcpManager.tcpClient.sendBytes(data)
         except Exception as ex:
             self.showError(ex)

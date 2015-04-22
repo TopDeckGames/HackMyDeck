@@ -1,0 +1,123 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<Card>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: (0, 0)
+            size: root.size
+
+    size: ("180dp", "250dp")
+
+    StackLayout:
+        id: container
+        orientation: "lr-tb"
+        size: (root.size[0], root.size[1])
+        padding: ["10dp", 0, "10dp", 0]
+        spacing: [0, 0]
+
+        GridLayout:
+            id: header
+            cols: 2
+            size_hint: (1, 0)
+            height: container.size[1] * 0.1
+
+            Label:
+                id: title
+                size_hint: (.9, 1)
+                text: "Nom de la carte"
+                color: [0, 0, 0, 1]
+                font_size: "18sp"
+                bold: True
+                halign: "left"
+
+            Label:
+                id: cost
+                size_hint: (.1, 1)
+                text: "3"
+                color: [0, 0, 0, 1]
+
+        Image:
+            id: picture
+            size_hint: (1, 0)
+            keep_ratio: False
+            allow_stretch: True
+            height: container.size[1] * 0.4
+            source: "Images/Connexion/background.jpg"
+
+        BoxLayout:
+            id: types
+            size_hint: (1, 0)
+            height: container.size[1] * 0.05
+            orientation: "horizontal"
+
+        BoxLayout:
+            id: description
+
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    points: [description.pos[0] - 5, description.pos[1], description.pos[0] - 5, description.pos[1] + description.size[1], description.pos[0] + description.size[0] + 5, description.pos[1] + description.size[1], description.pos[0] + description.size[0] + 5, description.pos[1], description.pos[0] - 5, description.pos[1]]
+                    width: 1
+
+            size_hint: (1, 0)
+            height: container.size[1] * 0.35
+            orientation: "vertical"
+
+            Label:
+                text: "Description"
+                bold: True
+                font_size: "13sp"
+                color: [0, 0, 0, 1]
+                text_size: (description.size[0], description.size[1] * 0.15)
+                halign: "left"
+
+            Label:
+                text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                text_size: (description.size[0], description.size[1] * 0.35)
+                font_size: "12sp"
+                color: [0, 0, 0, 1]
+                halign: "justify"
+                valign: "middle"
+
+            Label:
+                text: "Effets"
+                bold: True
+                font_size: "13sp"
+                color: [0, 0, 0, 1]
+                text_size: (description.size[0], description.size[1] * 0.15)
+                halign: "left"
+
+            Label:
+                text: ""
+                text_size: (description.size[0], description.size[1] * 0.35)
+                font_size: "12sp"
+                color: [0, 0, 0, 1]
+                halign: "justify"
+                valign: "middle"
+
+        GridLayout:
+            id: footer
+            size_hint: (1, 0)
+            height: container.size[1] * 0.1
+            cols: 2
+            spacing: footer.size[0] * 0.8
+
+            Label:
+                text: "5"
+                text_size: (footer.size[0] * 0.1, footer.size[1])
+                bold: True
+                halign: "center"
+                valign: "middle"
+                color: [0, 0, 0, 1]
+
+            Label:
+                text: "5"
+                text_size: (footer.size[0] * 0.1, footer.size[1])
+                bold: True
+                halign: "center"
+                valign: "middle"
+                color: [0, 0, 0, 1]

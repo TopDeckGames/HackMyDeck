@@ -2,13 +2,6 @@
 #:import kivy kivy
 
 <Card>:
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: (0, 0)
-            size: root.size
-
     size: ("180dp", "250dp")
 
     StackLayout:
@@ -27,7 +20,6 @@
             Label:
                 id: title
                 size_hint: (.9, 1)
-                text: "Nom de la carte"
                 color: [0, 0, 0, 1]
                 font_size: "18sp"
                 bold: True
@@ -36,7 +28,6 @@
             Label:
                 id: cost
                 size_hint: (.1, 1)
-                text: "3"
                 color: [0, 0, 0, 1]
 
         Image:
@@ -45,22 +36,21 @@
             keep_ratio: False
             allow_stretch: True
             height: container.size[1] * 0.4
-            source: "Images/Connexion/background.jpg"
 
         BoxLayout:
-            id: types
+            id: type
             size_hint: (1, 0)
             height: container.size[1] * 0.05
             orientation: "horizontal"
 
         BoxLayout:
-            id: description
+            id: center
 
             canvas:
                 Color:
                     rgba: 0, 0, 0, 1
                 Line:
-                    points: [description.pos[0] - 5, description.pos[1], description.pos[0] - 5, description.pos[1] + description.size[1], description.pos[0] + description.size[0] + 5, description.pos[1] + description.size[1], description.pos[0] + description.size[0] + 5, description.pos[1], description.pos[0] - 5, description.pos[1]]
+                    points: [center.pos[0] - 5, center.pos[1], center.pos[0] - 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1], center.pos[0] - 5, center.pos[1]]
                     width: 1
 
             size_hint: (1, 0)
@@ -72,12 +62,12 @@
                 bold: True
                 font_size: "13sp"
                 color: [0, 0, 0, 1]
-                text_size: (description.size[0], description.size[1] * 0.15)
+                text_size: (center.size[0], center.size[1] * 0.15)
                 halign: "left"
 
             Label:
-                text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                text_size: (description.size[0], description.size[1] * 0.35)
+                id: description
+                text_size: (center.size[0], center.size[1] * 0.35)
                 font_size: "12sp"
                 color: [0, 0, 0, 1]
                 halign: "justify"
@@ -88,12 +78,12 @@
                 bold: True
                 font_size: "13sp"
                 color: [0, 0, 0, 1]
-                text_size: (description.size[0], description.size[1] * 0.15)
+                text_size: (center.size[0], center.size[1] * 0.15)
                 halign: "left"
 
             Label:
-                text: ""
-                text_size: (description.size[0], description.size[1] * 0.35)
+                id: effects
+                text_size: (center.size[0], center.size[1] * 0.35)
                 font_size: "12sp"
                 color: [0, 0, 0, 1]
                 halign: "justify"

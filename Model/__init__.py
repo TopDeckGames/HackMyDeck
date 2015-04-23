@@ -8,4 +8,4 @@ Package contenant les modèles des objets
 __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
-__all__ = ['Model', 'User']
+__all__ = ['SuperModel', 'User', 'Card', 'UnitCard', 'TrapCard', 'TechnologyCard']

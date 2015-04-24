@@ -4,10 +4,10 @@
 __author__ = 'Emile Taverne'
 __version__ = '0.2'
 
+import struct
+
 from kivy.properties import ObjectProperty, NumericProperty
 from kivy.uix.widget import Widget
-
-import struct
 
 
 class BaseController(Widget):

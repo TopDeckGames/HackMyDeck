@@ -37,12 +37,12 @@ class TcpClient:
         # On teste le type de l'objet
         if isinstance(request, TcpRequest.TcpRequest):
             try:
-                #On construit la requête
+                # On construit la requête
                 request.build(self.token)
             except Exception as ex:
                 raise Exception("Erreur lors de la construction de la requete " + ex.message)
 
-            #Envoi
+            # Envoi
             try:
                 self.soc.send(request.getRequest())
             except Exception as ex:
@@ -50,7 +50,7 @@ class TcpClient:
         else:
             raise Exception("Un object de type TcpRequest est requis")
 
-        #On enregistre le token et la fonction de retour dans la liste
+        # On enregistre le token et la fonction de retour dans la liste
         TcpClient.TOKEN_LIST.append((self.token, callback))
         self.token += 1
 

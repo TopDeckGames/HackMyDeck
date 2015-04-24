@@ -79,7 +79,8 @@ class ConnexionScreen(GameScreen):
             lastname = self.popup.ids.name.text
 
             self.popup.dismiss()
-            self.popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Inscription", auto_dismiss=False)
+            self.popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Inscription",
+                                        auto_dismiss=False)
             self.popup.open()
 
             try:
@@ -95,6 +96,7 @@ class ConnexionScreen(GameScreen):
         self.popup.dismiss()
         self.popup = ConnexionPopup(content=Label(text=message), title=type)
         self.popup.open()
+
 
 class ConnexionPopup(Popup):
     """Widget popup definit dans le fichier .kv"""

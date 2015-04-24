@@ -1,0 +1,25 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<CardLayout>:
+    canvas.after:
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            points: [self.pos[0], self.pos[1], self.pos[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1], self.pos[0], self.pos[1]]
+            width: 1
+
+	size_hint: (None, None)
+    size: ("180dp", "250dp")
+
+    RelativeLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: (0, 0)
+                size: self.size
+
+        id: container
+        pos: root.pos
+        size: root.size

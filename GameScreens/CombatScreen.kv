@@ -1,0 +1,147 @@
+#:kivy 1.8
+#:import kivy kivy
+
+[UsernameLabel@Label]
+    id: ctx.id
+    pos_hint: ctx.pos_hint
+    text: ctx.text
+    bold: True
+    color: [0, 0, 0, 1]
+    size_hint: (0.4, 0.05)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 0.85
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<CombatScreen>:
+    StackLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        pos: root.pos
+        size: root.size
+
+        RelativeLayout:
+            canvas.before:
+                Color:
+                    rgba: 0, 1, 1, 1
+                Rectangle:
+                    pos: (0, 0)
+                    size: self.size
+            id: leftCol
+            size_hint: (0.2, 1)
+
+            CardLayout:
+                id: graveyardP2
+                pos_hint: {'center_x': 0.60, 'center_y': 0.65}
+
+            CardLayout:
+                id: graveyardP1
+                pos_hint: {'center_x': 0.60, 'center_y': 0.35}
+
+            UsernameLabel:
+                id: usernameP2
+                pos_hint: {'x': 0, 'center_y': 0.95}
+                text: "Jean-Kevin"
+
+            UsernameLabel:
+                id: usernameP1
+                pos_hint: {'x': 0, 'center_y': 0.05}
+                text: "Dark_Kikoo_75"
+
+
+        StackLayout:
+            id: centerCol
+            size_hint: (0.6, 1)
+
+            RelativeLayout:
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 1, 1
+                    Rectangle:
+                        pos: (0, 0)
+                        size: self.size
+
+                size_hint: (1, 0.2)
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: 0.25, 0, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                orientation: "horizontal"
+                size_hint: (1, 0.3)
+                spacing: "20dp"
+                padding: "10dp"
+
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                orientation: "horizontal"
+                size_hint: (1, 0.3)
+                spacing: "20dp"
+                padding: "10dp"
+
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                CardContainer:
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            RelativeLayout:
+                canvas.before:
+                    Color:
+                        rgba: 0.75, 0, 1, 1
+                    Rectangle:
+                        pos: (0, 0)
+                        size: self.size
+
+                size_hint: (1, 0.2)
+
+        FloatLayout:
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            id: rightCol
+            size_hint: (0.2, 1)
+
+            CardLayout:
+                id: deckP2
+                pos_hint: {'center_x': 0.4, 'center_y': 0.8}
+
+            CardLayout:
+                id: deckP1
+                pos_hint: {'center_x': 0.4, 'center_y': 0.2}

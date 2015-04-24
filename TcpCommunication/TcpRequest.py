@@ -40,7 +40,7 @@ class TcpRequest:
         except Exception as ex:
             raise ex
 
-        #On calcule un md5 des donnees pour en verifier l'integrite cote serveur
+        # On calcule un md5 des donnees pour en verifier l'integrite cote serveur
         self.checksum = hashlib.md5(self.data).hexdigest()
 
         #On construit la structure de l'entete

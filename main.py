@@ -33,6 +33,7 @@ if platform == 'win':
 from GameScreens.ConnexionScreen import ConnexionScreen
 from GameScreens.QGScreen import QGScreen
 from GameScreens.GameScreen import GameScreen
+from GameScreens.CombatScreen import CombatScreen
 
 from TcpCommunication.Manager import Manager
 
@@ -188,6 +189,8 @@ class InterfaceManager(FloatLayout):
             self.gameScreen = QGScreen(app=self, opacity=0)
         elif screen == "GameScreen":
             self.gameScreen = GameScreen(app=self, opacity=0)
+        elif screen == "CombatScreen":
+            self.gameScreen = CombatScreen(app=self, opacity=0)
         else:
             print "GameScreen inconnu : ", screen
             self.changeScreen("ConnexionScreen")

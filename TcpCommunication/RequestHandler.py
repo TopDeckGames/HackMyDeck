@@ -9,10 +9,10 @@ __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
 import time
-
 import struct
 import hashlib
 from threading import Thread
+
 from TcpCommunication.TcpListener import TcpListener
 from TcpCommunication.TcpClient import TcpClient
 
@@ -45,7 +45,7 @@ class RequestHandler(Thread):
                 state = header[2]
                 checksum = header[3]
 
-                #On attend qu'il y ai assez de données
+                # On attend qu'il y ai assez de données
                 while len(self.tcpListener.buffer) < size:
                     time.sleep(0.01)
 

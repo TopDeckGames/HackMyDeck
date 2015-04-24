@@ -8,4 +8,4 @@ Package contenant les widgets personnalisé
 __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
-__all__ = ['Card']
+__all__ = ['Card', 'CardLayout']

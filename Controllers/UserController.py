@@ -33,7 +33,7 @@ class UserController(BaseController):
         # On complète les chaines de charactères pour qu'elles fassent la longueur maximale
         login = StringHelper().CompleteString(login, User.LOGIN_LENGTH)
 
-        #Préparation de la requête
+        # Préparation de la requête
         req = TcpRequest(Manager.MESSAGE_LENGTH)
         req.setManager(self.managerId)
         req.addData("H", 1)  #Identifiant de la méthode distante à appeler
@@ -47,7 +47,7 @@ class UserController(BaseController):
     def connexionResp(self, state, data):
         # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
-            #On vérifie que la requête a bien étée un succés
+            # On vérifie que la requête a bien étée un succés
             if self.verifyResponse(data[:4]):
                 data = data[4:]
 
@@ -98,7 +98,7 @@ class UserController(BaseController):
         firstname = StringHelper().CompleteString(firstname, User.FIRSTNAME_LENGTH)
         lastname = StringHelper().CompleteString(lastname, User.LASTNAME_LENGTH)
 
-        #Préparation de la requête
+        # Préparation de la requête
         req = TcpRequest(Manager.MESSAGE_LENGTH)
         req.setManager(self.managerId)
         req.addData("H", 2)  #Identifiant de la méthode distante à appeler
@@ -112,7 +112,7 @@ class UserController(BaseController):
         self.app.tcpManager.tcpClient.send(req, self.callback2)
 
     def registerResp(self, state, data):
-        #On vérifie qu'il n'y a pas eu d'erreur technique
+        # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
             #On vérifie que la requête a bien étée un succés
             if self.verifyResponse(data[:4]):
@@ -122,6 +122,6 @@ class UserController(BaseController):
         else:
             self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
 
-    #Variables contenant les fonction réponse
+    # Variables contenant les fonction réponse
     callback1 = connexionResp
     callback2 = registerResp

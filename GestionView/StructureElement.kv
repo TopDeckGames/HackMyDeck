@@ -1,0 +1,91 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<StructureElement>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "horizontal"
+        spacing: "20dp"
+
+        BoxLayout:
+            size_hint: (0.6, 1)
+            orientation: "vertical"
+            padding: ["100dp", 0]
+
+            Label:
+                text: root.structure.name
+                color: [0, 0, 0, 1]
+                font_size: "30sp"
+                bold: True
+                size_hint: (1, 0.1)
+                text_size: self.size
+                halign: "left"
+                valign: "middle"
+
+            RelativeLayout:
+                size_hint: (1, 0.1)
+
+                Label:
+                    text: "Level : " + str(root.structure.level)
+                    pos_hint: {"left": 0, "center_y": 0.5}
+                    color: [0, 0, 0, 1]
+                    font_size: "20sp"
+                    halign: "left"
+                    valign: "top"
+                    size_hint: (0.3, 1)
+                    text_size: self.size
+
+                Button:
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: [self.pos[0], self.pos[1], self.pos[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1], self.pos[0], self.pos[1]]
+                            width: 1
+
+                    text: "Améliorer"
+                    pos_hint: {"right": 1, "top": 1}
+                    size_hint: (0.12, 0.5)
+                    font_size: "20sp"
+                    background_color: [0.72, 0.72, 0.71, 1]
+                    background_normal: ''
+                    color: [0, 0, 0, 1]
+
+            RelativeLayout:
+                id: container
+                size_hint: (1, 0.8)
+
+        BoxLayout:
+            size_hint: (0.4, 1)
+            orientation: "vertical"
+            padding: ["20dp", 0]
+
+            FloatLayout:
+                size_hint: (1, 0.08)
+                Button:
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: [self.pos[0], self.pos[1], self.pos[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1], self.pos[0], self.pos[1]]
+                            width: 1
+
+                    pos_hint: {"right": 1, "center_y": 0.5}
+                    size_hint: (0.15, 0.7)
+                    text: "Retour"
+                    bold: True
+                    background_color: [0.72, 0.72, 0.71, 1]
+                    background_normal: ''
+                    color: [0, 0, 0, 1]
+                    on_press: root.leave()
+
+            Image:
+                size_hint: (1, 0.5)
+                source: "Images/Structures/" + str(root.structure.id) + ".jpg"
+                keep_ratio: False
+                allow_stretch: True
+
+            RstDocument:
+                size_hint: (1, 0.42)
+                text: root.structure.description

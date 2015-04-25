@@ -10,6 +10,8 @@ from kivy.uix.widget import Widget
 
 from GameScreens.QGScreen import QGScreen
 
+from GestionView.StructureElement import StructureElement
+from Model.Structure import Structure
 
 class TestWidget(Widget):
     def __init__(self, **kwargs):
@@ -18,6 +20,10 @@ class TestWidget(Widget):
         screen = QGScreen(app=self, opacity=0)
         self.add_widget(screen)
         screen.show()
+
+        structure = Structure(id=0, name="Test", description="Ceci est un batiment de test")
+        element = StructureElement(structure)
+        screen.changeElement(element)
 
 
 class MyApp(App):

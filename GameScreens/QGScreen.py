@@ -18,6 +18,7 @@ from kivy.uix.widget import Builder
 from GameScreen import GameScreen
 
 from GestionView.BaseElement import BaseElement
+from GestionView.MapElement import MapElement
 
 Builder.load_file("GameScreens/QGScreen.kv")
 
@@ -41,11 +42,13 @@ class QGScreen(GameScreen):
         #except Exception as ex:
         #    self.showError(ex)
 
-        self.changeElement(BaseElement())
-
     def changeElement(self, element):
         if not isinstance(element, BaseElement):
             raise Exception("L'objet n'est pas un élément de vue valide")
 
+        element.sup = self
         self.ids.container.clear_widgets()
         self.ids.container.add_widget(element)
+
+    def defaultElement(self):
+        return MapElement()

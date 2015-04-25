@@ -2,44 +2,53 @@
 #:import kivy kivy
 
 <QGScreen>:
-	size_hint: (1, 1)
-	pos: (0, 0)
+    BoxLayout:
+	    orientation: "vertical"
+	    size: root.size
+	    pos: root.pos
 
-	BoxLayout:
-		size: root.size
-		pos: root.pos
-		orientation: 'vertical'
+        RelativeLayout:
+            canvas.before:
+                Color:
+                    rgba: 0.6, 0.8, 0.9, 1
+                Rectangle:
+                    pos: (0, 0)
+                    size: self.size
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    points: [0, 0, 0, self.size[1], self.size[0], self.size[1], self.size[0], 0, 0, 0]
+                    width: 2
 
-		BoxLayout:
-			id: topLayout
-			size_hint: (None, None)
-			size: (root.width, "50dp")
-			pos_hint: {'top':1}
-			orientation: 'horizontal'
-			
-			canvas:
-				Rectangle:
-					source: 'Images/bar.jpg'
-					pos: self.pos
-					size: self.size
-			
-			Label:
-				size_hint: (None, None)
-				size: (topLayout.width / 2.25, topLayout.height)
-				pos_hint: {'left':1}
-				text: "Bienvenue KikooDu38"
-				halign: "left"
-				color: (0, 0, 0, 1)
-				font_size: "20sp"
-				
-			Button:
-				size_hint: (None, None)
-				size: ("110dp", topLayout.height)
-				text: "Fight !"
-			
-			
-				
-		BoxLayout:
-			size_hint: (1, 1)
-			pos: root.pos
-			orientation: 'horizontal'
+            size_hint: (1, 0.06)
+
+
+            Label:
+                pos_hint: {'x': 0.025, 'y': 0}
+                size_hint: (0.3, 1)
+                text: "Crédits : " + str(root.credits)
+                halign: "left"
+                valign: "middle"
+                bold: True
+                font_size: '18sp'
+                text_size: self.size
+                color: [0, 0, 0, 1]
+
+            Button:
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size_hint: (0.08, 0.8)
+                text: "Attaquer"
+                bold: True
+                background_color: [0.6, 0, 0, 1]
+                background_normal: ''
+
+        RelativeLayout:
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: (0, 0)
+                    size: self.size
+
+            id: container
+            size_hint: (1, 0.93)

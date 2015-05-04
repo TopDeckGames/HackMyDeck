@@ -8,4 +8,5 @@ Package contenant les modèles des objets
 __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
-__all__ = ['SuperModel', 'User', 'Card', 'UnitCard', 'TrapCard', 'TechnologyCard', 'Structure']
+__all__ = ['SuperModel', 'User', 'Card', 'UnitCard', 'TrapCard', 'TechnologyCard', 'Structure', 'Action', 'Deck',
+           'Effect', 'Enhancement', 'Game', 'Quest', 'SkillTree', 'Version']

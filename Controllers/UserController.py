@@ -85,18 +85,18 @@ class UserController(BaseController):
         else:
             self.app.gameScreen.displayMessage("Connexion impossible", "Avertissement")
 
-    def register(self, login, password, firstname, lastname):
-        if login.strip() == "" or password.strip() == "" or firstname.strip() == "" or lastname.strip() == "":
-            raise Exception("Donnée manquante")  # Cryptage du mot de passe
+    def register(self, login, password, email):
+        if login.strip() == "" or password.strip() == "" or email.strip() == "":
+            raise Exception("Donnée manquante")
 
+        # Cryptage du mot de passe
         m = hashlib.md5()
         m.update(password)
         hash_password = m.digest()
 
         # On complète les chaines de charactères pour qu'elles fassent la longueur maximale
         login = StringHelper().CompleteString(login, User.LOGIN_LENGTH)
-        firstname = StringHelper().CompleteString(firstname, User.FIRSTNAME_LENGTH)
-        lastname = StringHelper().CompleteString(lastname, User.LASTNAME_LENGTH)
+        email = StringHelper().CompleteString(email, User.EMAIL_LENGTH)
 
         # Préparation de la requête
         req = TcpRequest(Manager.MESSAGE_LENGTH)
@@ -105,8 +105,7 @@ class UserController(BaseController):
         #Ajout des données
         req.addData(str(User.LOGIN_LENGTH) + "s", login)
         req.addData(str(User.PASSWORD_LENGTH) + "s", hash_password)
-        req.addData(str(User.FIRSTNAME_LENGTH) + "s", firstname)
-        req.addData(str(User.LASTNAME_LENGTH) + "s", login)
+        req.addData(str(User.EMAIL_LENGTH) + "s", email)
 
         #Envoi
         self.app.tcpManager.tcpClient.send(req, self.callback2)
@@ -117,8 +116,8 @@ class UserController(BaseController):
             #On vérifie que la requête a bien étée un succés
             if self.verifyResponse(data[:4]):
                 self.app.gameScreen.displayMessage("Inscription réalisée", "Information")
-
-            self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
+            else:
+                self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
         else:
             self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
 

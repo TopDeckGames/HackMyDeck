@@ -68,15 +68,16 @@ class ConnexionScreen(GameScreen):
             pass
         elif self.popup.ids.password.text.strip() == "":
             pass
-        elif self.popup.ids.name.text.strip() == "":
+        elif self.popup.ids.password2.text.strip() == "":
             pass
-        elif self.popup.ids.firstName.text.strip() == "":
+        elif self.popup.ids.email.text.strip() == "":
+            pass
+        elif self.popup.ids.password.text.strip() != self.popup.ids.password2.text.strip():
             pass
         else:
             login = self.popup.ids.username.text
             password = self.popup.ids.password.text
-            firstname = self.popup.ids.firstName.text
-            lastname = self.popup.ids.name.text
+            email = self.popup.ids.email.text
 
             self.popup.dismiss()
             self.popup = ConnexionPopup(content=Image(source="Images/loader.gif"), title="Inscription",
@@ -85,7 +86,7 @@ class ConnexionScreen(GameScreen):
 
             try:
                 userController = UserController(app=self.app)
-                userController.register(login, password, firstname, lastname)
+                userController.register(login, password, email)
             except Exception as ex:
                 self.popup.dismiss()
                 self.popup = ConnexionPopup(content=Label(text="Inscription impossible"), title="Avertissement")

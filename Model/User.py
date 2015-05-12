@@ -11,14 +11,13 @@ from Model.SuperModel import SuperModel
 class User(SuperModel):
     LOGIN_LENGTH = 50
     PASSWORD_LENGTH = 32
+    EMAIL_LENGTH = 60
     FIRSTNAME_LENGTH = 75
     LASTNAME_LENGTH = 75
-    PSEUDO_LENGTH = 50
 
     id = NumericProperty(0)
     login = StringProperty()
     password = StringProperty()
-    pseudo = StringProperty()
     credit = NumericProperty(0)
     nbWin = NumericProperty(0)
     nbConnexion = NumericProperty(1)

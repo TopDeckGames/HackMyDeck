@@ -4,4 +4,4 @@
 __author__ = 'Emile Taverne'
 __version__ = '0.1'
 
-__all__ = ['BaseController', 'UserController']
+__all__ = ['BaseController', 'UserController', 'GestionController']

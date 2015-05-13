@@ -37,6 +37,8 @@ from GameScreens.CombatScreen import CombatScreen
 
 from TcpCommunication.Manager import Manager
 
+from Manager.GameManager import GameManager
+
 fichierConfig = "config.ini"
 
 if getattr(sys, 'frozen', False):
@@ -154,6 +156,7 @@ class InterfaceManager(FloatLayout):
     app = ObjectProperty(None)
     gameScreen = ObjectProperty(None)
     tcpManager = Manager()
+    gameManager = GameManager()
 
     def __init__(self, **kwargs):
         """Initialisation et affiche l'ecran de connexion"""

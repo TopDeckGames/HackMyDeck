@@ -24,6 +24,8 @@ from GameScreen import GameScreen
 from GestionView.BaseElement import BaseElement
 from GestionView.MapElement import MapElement
 
+from Controllers.GestionController import GestionController
+
 Builder.load_file("GameScreens/QGScreen.kv")
 
 
@@ -63,8 +65,8 @@ class QGScreen(GameScreen):
         if self.ids.cmdAttack.text != "Annuler":
             self.deckSelect = Spinner(id="deckSelect", size_hint=(0.7, 1))
 
-            for i in range(10):
-                self.deckSelect.values.append("Deck " + str(i))
+            for deck in self.app.gameManager.decks:
+                self.deckSelect.values.append(deck.name)
 
             button = Button(text="Lancer", size_hint=(0.3, 1))
             button.bind(on_press=self.attack)
@@ -78,8 +80,25 @@ class QGScreen(GameScreen):
             self.popup.open()
         else:
             self.ids.cmdAttack.text = "Attaquer"
+            try:
+                gestionController = GestionController(app=self.app)
+                gestionController.stopAttack(self.app.gameManager.user)
+            except Exception as ex:
+                pass
 
     def attack(self, *args):
         if self.deckSelect.text.strip() != "":
             self.popup.dismiss()
             self.ids.cmdAttack.text = "Annuler"
+
+            deck = None
+            for element in self.app.gameManager.decks:
+                if element.name == self.deckSelect.text.strip():
+                    deck = element
+                    break
+
+            try:
+                gestionController = GestionController(app=self.app)
+                gestionController.attack(self.app.gameManager.user, deck)
+            except Exception as ex:
+                pass

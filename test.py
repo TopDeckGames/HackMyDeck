@@ -12,10 +12,13 @@ from GameScreens.QGScreen import QGScreen
 
 from GestionView.StructureElement import StructureElement
 from Model.Structure import Structure
+from Manager.GameManager import GameManager
 
 class TestWidget(Widget):
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)
+
+        self.gameManager = GameManager()
 
         screen = QGScreen(app=self, opacity=0)
         self.add_widget(screen)

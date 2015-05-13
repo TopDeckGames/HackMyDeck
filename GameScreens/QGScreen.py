@@ -14,6 +14,10 @@ import kivy
 kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
+from kivy.uix.popup import Popup
+from kivy.uix.stacklayout import StackLayout
+from kivy.uix.button import Button
+from kivy.uix.spinner import Spinner
 
 from GameScreen import GameScreen
 
@@ -42,6 +46,8 @@ class QGScreen(GameScreen):
         #except Exception as ex:
         #    self.showError(ex)
 
+        self.ids.cmdAttack.bind(on_press=self.showAttackPopup)
+
     def changeElement(self, element):
         if not isinstance(element, BaseElement):
             raise Exception("L'objet n'est pas un élément de vue valide")
@@ -52,3 +58,28 @@ class QGScreen(GameScreen):
 
     def defaultElement(self):
         return MapElement()
+
+    def showAttackPopup(self, *args):
+        if self.ids.cmdAttack.text != "Annuler":
+            self.deckSelect = Spinner(id="deckSelect", size_hint=(0.7, 1))
+
+            for i in range(10):
+                self.deckSelect.values.append("Deck " + str(i))
+
+            button = Button(text="Lancer", size_hint=(0.3, 1))
+            button.bind(on_press=self.attack)
+
+            content = StackLayout()
+            content.add_widget(self.deckSelect)
+            content.add_widget(button)
+
+            self.popup = Popup(title='Combat', content=content, auto_dismiss=True, size_hint=(None, None),
+                               size=("400dp", "100dp"))
+            self.popup.open()
+        else:
+            self.ids.cmdAttack.text = "Attaquer"
+
+    def attack(self, *args):
+        if self.deckSelect.text.strip() != "":
+            self.popup.dismiss()
+            self.ids.cmdAttack.text = "Annuler"

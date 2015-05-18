@@ -16,6 +16,8 @@ class GestionController(BaseController):
         self.managerId = 2
 
     def attack(self, user, deck):
+        token = 0
+
         # Préparation de la requête
         req = TcpRequest(Manager.MESSAGE_LENGTH)
         req.setManager(self.managerId)
@@ -23,6 +25,7 @@ class GestionController(BaseController):
         # Ajout des données
         req.addData("i", user.id)
         req.addData("i", deck.id)
+        req.addData("I", token)
 
         #Envoi
         self.app.tcpManager.tcpClient.send(req, self.callback1)

@@ -1,0 +1,20 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<LoadingWidget>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        pos: root.pos
+        size: root.size
+
+        Label:
+            id: title
+            text: "Chargement en cours"
+            font_size: "50sp"
+            color: [1, 1, 1, 1]

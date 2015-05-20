@@ -39,6 +39,8 @@ from TcpCommunication.Manager import Manager
 
 from Manager.GameManager import GameManager
 
+from CustomWidget.LoadingWidget import LoadingWidget
+
 fichierConfig = "config.ini"
 
 if getattr(sys, 'frozen', False):
@@ -164,6 +166,9 @@ class InterfaceManager(FloatLayout):
 
         self.configurationPopup = ConfigurationDialog(attach_to=self, app=self)
         self.menuPopup = MenuDialog(app=self)
+        self.loading = LoadingWidget(size=self.app.window.size, pos=(0, 0))
+
+        self.gameManager.bind(loading=self.loading.setVisible)
 
         self.changeScreen("ConnexionScreen")
 
@@ -172,6 +177,7 @@ class InterfaceManager(FloatLayout):
         conf = Button(size_hint=(None, None), size=("50dp", "50dp"), pos=("5dp", "5dp"), on_press=self.menu)
         conf.add_widget(Image(source="Images/reglages.png", size_hint=(None, None), size=conf.size, pos=conf.pos))
         self.add_widget(conf)
+        self.add_widget(self.loading)
 
     def changeScreen(self, screen):
         """Methode permettant de changer l'ecran qui est affiche
@@ -198,6 +204,7 @@ class InterfaceManager(FloatLayout):
             print "GameScreen inconnu : ", screen
             self.changeScreen("ConnexionScreen")
 
+        self.gameScreen.pos = (0, 0)
         self.add_widget(self.gameScreen)
         self.gameScreen.show()
         self.build()

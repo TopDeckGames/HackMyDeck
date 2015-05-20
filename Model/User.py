@@ -10,7 +10,7 @@ from Model.SuperModel import SuperModel
 
 class User(SuperModel):
     LOGIN_LENGTH = 50
-    PASSWORD_LENGTH = 32
+    PASSWORD_LENGTH = 16
     EMAIL_LENGTH = 60
     FIRSTNAME_LENGTH = 75
     LASTNAME_LENGTH = 75

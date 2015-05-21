@@ -22,6 +22,8 @@ from GameScreen import GameScreen
 
 from GestionView.BaseElement import BaseElement
 from GestionView.MapElement import MapElement
+from GestionView.DecksElement import DecksElement
+from GestionView.StatsElement import StatsElement
 
 from Controllers.GestionController import GestionController
 
@@ -32,7 +34,7 @@ class QGScreen(GameScreen):
     """Widget de l'ecran"""
 
     credits = 150
-    actions = [("Accueil", MapElement), ("Mes decks", BaseElement), ("Mes statistiques", BaseElement)]
+    actions = [("Accueil", MapElement), ("Mes decks", DecksElement), ("Mes statistiques", StatsElement)]
     currentAction = None
 
     def __init__(self, **kwargs):

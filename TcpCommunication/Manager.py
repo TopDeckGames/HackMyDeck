@@ -20,6 +20,8 @@ class Manager:
             self.tcpClient = TcpClient(server[0], server[1])
             self.tcpListener = TcpListener(self.tcpClient.soc, self.MESSAGE_LENGTH)
             self.requestHandler = RequestHandler(self.tcpListener, self.MESSAGE_LENGTH)
+            self.tcpListener.daemon = True
+            self.requestHandler.daemon = True
             self.tcpListener.start()
             self.requestHandler.start()
         except Exception as ex:

@@ -26,6 +26,7 @@ from kivy import platform
 import os
 import sys
 import ConfigParser
+import threading
 
 if platform == 'win':
     from win32api import GetSystemMetrics

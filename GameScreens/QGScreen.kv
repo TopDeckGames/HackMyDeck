@@ -2,6 +2,8 @@
 #:import kivy kivy
 
 <QGScreen>:
+    id: base
+
     BoxLayout:
 	    orientation: "vertical"
 	    size: root.size
@@ -42,6 +44,11 @@
                 bold: True
                 background_color: [0.6, 0, 0, 1]
                 background_normal: ''
+
+            Spinner:
+                id: spnActions
+                pos_hint: {'right': 0.99, 'center_y': 0.5}
+                size_hint: (0.15, 0.9)
 
         RelativeLayout:
             canvas.before:

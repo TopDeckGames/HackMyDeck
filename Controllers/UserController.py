@@ -68,7 +68,7 @@ class UserController(BaseController):
                         port = response[1]
 
                         #On enregistre le serveur de gestion à contacter
-                        Manager.SERVEUR_GESTION = (socket.inet_ntoa(struct.pack('L', server)), port)
+                        Manager.SERVEUR_GESTION = (socket.inet_ntoa(struct.pack('l', server)), port)
                         #Changement d'écran
                         self.app.gameScreen.popup.dismiss()
                         self.app.changeScreen("QGScreen")

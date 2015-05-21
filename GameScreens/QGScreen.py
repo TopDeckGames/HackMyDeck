@@ -25,12 +25,6 @@ from GestionView.MapElement import MapElement
 
 from Controllers.GestionController import GestionController
 
-from TcpCommunication.Manager import Manager
-
-from Manager.GameManager import GameManager
-
-import struct
-
 Builder.load_file("GameScreens/QGScreen.kv")
 
 
@@ -38,20 +32,30 @@ class QGScreen(GameScreen):
     """Widget de l'ecran"""
 
     credits = 150
+    actions = [("Accueil", MapElement), ("Mes decks", BaseElement), ("Mes statistiques", BaseElement)]
+    currentAction = None
 
     def __init__(self, **kwargs):
         super(QGScreen, self).__init__(**kwargs)
 
         # A l'arrivée sur l'écran de gestion on se connecte au serveur attribué
-        try:
-            self.app.tcpManager.close()
-            self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
+        # try:
+        #    self.app.tcpManager.close()
+        #    self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
 
-            sData = struct.Struct("<i")
-            data = sData.pack(*[GameManager.user.id])
-            self.app.tcpManager.tcpClient.sendBytes(data)
-        except Exception as ex:
-            self.showError(ex)
+        #    sData = struct.Struct("<i")
+        #    data = sData.pack(*[GameManager.user.id])
+        #    self.app.tcpManager.tcpClient.sendBytes(data)
+        # except Exception as ex:
+        #    self.showError(ex)
+
+        self.currentAction = self.actions[0]
+        self.changeElement(self.currentAction[1]())
+
+        for item in self.actions:
+            self.ids.spnActions.values.append(item[0])
+        self.ids.spnActions.text = self.currentAction[0]
+        self.ids.spnActions.bind(text=self.actionChange)
 
         self.ids.cmdAttack.bind(on_press=self.showAttackPopup)
 
@@ -63,8 +67,14 @@ class QGScreen(GameScreen):
         self.ids.container.clear_widgets()
         self.ids.container.add_widget(element)
 
-    def defaultElement(self):
-        return MapElement()
+    def actionChange(self, *args):
+        if self.ids.spnActions.text != self.currentAction[0]:
+            for item in self.actions:
+                if item[0] == self.ids.spnActions.text:
+                    element = item[1]()
+                    self.changeElement(element)
+                    self.currentAction = item
+                    return
 
     def showAttackPopup(self, *args):
         if self.ids.cmdAttack.text != "Annuler":

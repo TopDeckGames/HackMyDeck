@@ -2,3 +2,12 @@
 #:import kivy kivy
 
 <MapElement>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "horizontal"
+        spacing: "20dp"
+
+        Label:
+            text: "Coucou, ceci est la page d'accueil"
+            color: [0, 0, 0, 1]

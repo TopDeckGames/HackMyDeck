@@ -26,5 +26,22 @@
 			text: "Une erreur est survenue, veuillez nous excuser pour la gene occasionnee"
 			font_size: "25sp"
 
+		Button:
+			canvas.after:
+				Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    points: [self.pos[0], self.pos[1], self.pos[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1] + self.size[1], self.pos[0] + self.size[0], self.pos[1], self.pos[0], self.pos[1]]
+                    width: 1
+
+			text: "Retour"
+			pos_hint: {"center_x": 0.5}
+			size_hint: (1, 0.15)
+			background_normal: ""
+			background_color: [1, 1, 1, 1]
+			color: [0, 0, 0, 1]
+			font_size: "28sp"
+			on_release: root.app.changeScreen("ConnexionScreen")
+
 		Label:
 			text: root.debug

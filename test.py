@@ -19,6 +19,7 @@ class TestWidget(Widget):
         self.gameManager = GameManager()
 
         screen = QGScreen(app=self, opacity=0)
+        # screen = CombatScreen(app=self, opacity=0)
         self.add_widget(screen)
         screen.show()
 

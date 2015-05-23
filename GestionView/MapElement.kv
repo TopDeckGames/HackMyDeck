@@ -2,11 +2,20 @@
 #:import kivy kivy
 
 <MapElement>:
-    BoxLayout:
+    canvas:
+		Rectangle:
+			source: 'Images/Connexion/temp.jpg'
+			pos: root.pos
+			size: root.size
+
+    RelativeLayout:
         size: root.size
         pos: root.pos
         orientation: "horizontal"
         spacing: "20dp"
+
+
+
 
         Label:
             text: "Coucou, ceci est la page d'accueil"

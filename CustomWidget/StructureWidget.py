@@ -17,8 +17,9 @@ from kivy.properties import ObjectProperty
 
 from Model.Structure import Structure
 
-Builder.load_file("CustomWidget/StructureWidget.kv")
+from DynImage import DynImage
 
+Builder.load_file("CustomWidget/StructureWidget.kv")
 
 class StructureWidget(Widget):
     structure = ObjectProperty()

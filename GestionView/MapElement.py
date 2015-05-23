@@ -13,9 +13,29 @@ from kivy.uix.widget import Builder
 
 from GestionView.BaseElement import BaseElement
 
+from CustomWidget.StructureWidget import StructureWidget
+
 Builder.load_file("GestionView/MapElement.kv")
 
 
 class MapElement(BaseElement):
+    structures = []
+
     def __init__(self, **kwargs):
         super(MapElement, self).__init__(**kwargs)
+
+        for structure in self.sup.app.gameManager.structures:
+            widget = StructureWidget(structure)
+            self.structures.append(widget)
+            self.add_widget(widget)
+
+        self.bind(size=self.update)
+        self.update()
+
+    def update(self, *args):
+        for widget in self.structures:
+            widget.size = ((widget.structure.pos["right"] - widget.structure.pos["left"]) * self.width / 100,
+                           (widget.structure.pos["bottom"] - widget.structure.pos["top"]) * self.height / 100)
+            widget.pos = (
+                widget.structure.pos["left"] * self.width / 100,
+                (100 - widget.structure.pos["bottom"]) * self.height / 100)

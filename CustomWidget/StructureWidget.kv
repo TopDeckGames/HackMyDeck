@@ -1,0 +1,11 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<StructureWidget>:
+    DynImage:
+        id: image
+        source: "Images/Structures/" + str(root.structure.id) + ".zip"
+        size: root.size
+        pos: root.pos
+        allow_stretch: True
+        keep_ratio: False

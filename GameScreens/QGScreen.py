@@ -27,12 +27,6 @@ from GestionView.StatsElement import StatsElement
 
 from Controllers.GestionController import GestionController
 
-from Manager.GameManager import GameManager
-
-from TcpCommunication.Manager import Manager
-
-import struct
-
 Builder.load_file("GameScreens/QGScreen.kv")
 
 class QGScreen(GameScreen):
@@ -46,18 +40,18 @@ class QGScreen(GameScreen):
         super(QGScreen, self).__init__(**kwargs)
 
         # A l'arrivée sur l'écran de gestion on se connecte au serveur attribué
-        try:
-            self.app.tcpManager.close()
-            self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
+        # try:
+        #    self.app.tcpManager.close()
+        #    self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
 
-            sData = struct.Struct("<i")
-            data = sData.pack(*[GameManager.user.id])
-            self.app.tcpManager.tcpClient.sendBytes(data)
-        except Exception as ex:
-            self.showError(ex)
+        #    sData = struct.Struct("<i")
+        #    data = sData.pack(*[GameManager.user.id])
+        #    self.app.tcpManager.tcpClient.sendBytes(data)
+        # except Exception as ex:
+        #    self.showError(ex)
 
         self.currentAction = self.actions[0]
-        self.changeElement(self.currentAction[1]())
+        self.changeElement(self.currentAction[1])
 
         for item in self.actions:
             self.ids.spnActions.values.append(item[0])
@@ -67,10 +61,11 @@ class QGScreen(GameScreen):
         self.ids.cmdAttack.bind(on_press=self.showAttackPopup)
 
     def changeElement(self, element):
+        element = element(sup=self)
+
         if not isinstance(element, BaseElement):
             raise Exception("L'objet n'est pas un élément de vue valide")
 
-        element.sup = self
         self.ids.container.clear_widgets()
         self.ids.container.add_widget(element)
 
@@ -78,7 +73,7 @@ class QGScreen(GameScreen):
         if self.ids.spnActions.text != self.currentAction[0]:
             for item in self.actions:
                 if item[0] == self.ids.spnActions.text:
-                    element = item[1]()
+                    element = item[1]
                     self.changeElement(element)
                     self.currentAction = item
                     return

@@ -10,13 +10,14 @@ kivy.require('1.8.0')
 
 from kivy.uix.widget import Widget
 
-from kivy.properties import BooleanProperty, DictProperty, ObjectProperty
+from kivy.properties import BooleanProperty, ListProperty, ObjectProperty
 
 
 class GameManager(Widget):
     user = ObjectProperty()
-    decks = DictProperty([])
-    cards = DictProperty([])
+    decks = ListProperty([])
+    cards = ListProperty([])
+    structures = ListProperty([])
     loading = BooleanProperty(False)
 
     def __init__(self, **kwargs):

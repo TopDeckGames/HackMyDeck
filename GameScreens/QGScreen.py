@@ -60,8 +60,12 @@ class QGScreen(GameScreen):
 
         self.ids.cmdAttack.bind(on_press=self.showAttackPopup)
 
-    def changeElement(self, element):
-        element = element(sup=self)
+    def changeElement(self, element, opt=None):
+        if not opt:
+            element = element(sup=self)
+        else:
+            element = element(opt, sup=self)
+
 
         if not isinstance(element, BaseElement):
             raise Exception("L'objet n'est pas un élément de vue valide")
@@ -119,3 +123,6 @@ class QGScreen(GameScreen):
                 gestionController.attack(self.app.gameManager.user, deck)
             except Exception as ex:
                 pass
+
+    def defaultElement(self):
+        return MapElement

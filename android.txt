@@ -1,3 +1,4 @@
-title=Game
-author=Emile
+title=HackMyDeck
+author=TopDeckGames
+
 orientation=landscape

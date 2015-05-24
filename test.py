@@ -18,7 +18,7 @@ class TestWidget(Widget):
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)
 
-        structure = Structure()
+        structure = Structure(id=1)
         structure.pos["left"] = 34.94
         structure.pos["right"] = 62.29
         structure.pos["top"] = 42.04

@@ -12,6 +12,7 @@ kivy.require('1.8.0')
 from kivy.uix.widget import Builder
 
 from GestionView.BaseElement import BaseElement
+from GestionView.StructureElement import StructureElement
 
 from CustomWidget.StructureWidget import StructureWidget
 
@@ -27,6 +28,7 @@ class MapElement(BaseElement):
         for structure in self.sup.app.gameManager.structures:
             widget = StructureWidget(structure)
             self.structures.append(widget)
+            widget.bind(click=self.goToStructure)
             self.add_widget(widget)
 
         self.bind(size=self.update)
@@ -39,3 +41,6 @@ class MapElement(BaseElement):
             widget.pos = (
                 widget.structure.pos["left"] * self.width / 100,
                 (100 - widget.structure.pos["bottom"]) * self.height / 100)
+
+    def goToStructure(self, obj, val):
+        self.sup.changeElement(StructureElement, obj.structure)

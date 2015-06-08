@@ -1,0 +1,42 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<Leader>:
+    BoxLayout:
+        size: root.size
+        orientation: 'horizontal'
+
+        Image:
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            id: picture
+            size_hint: (0.4, 1)
+
+        GridLayout:
+            cols: 1
+            size_hint: (0.6, 1)
+
+            Label:
+                id: title
+                font_size: "25sp"
+                color: [0, 0, 0, 1]
+
+            RstDocument:
+                id: description
+                font_size: "15sp"
+                color: [0, 0, 0, 1]
+
+            BoxLayout:
+                orientation: "horizontal"
+
+                Label:
+
+                Button:
+                    text: "Engager"
+                    size_hint: (0.6, 0.6)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}

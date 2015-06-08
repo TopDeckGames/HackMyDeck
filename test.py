@@ -13,19 +13,42 @@ from GameScreens.QGScreen import QGScreen
 from Manager.GameManager import GameManager
 
 from Model.Structure import Structure
+from Model.Leader import Leader
 
 class TestWidget(Widget):
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)
 
-        structure = Structure(id=1)
+        structure = Structure(id=0)
         structure.pos["left"] = 34.94
         structure.pos["right"] = 62.29
         structure.pos["top"] = 42.04
         structure.pos["bottom"] = 60.46
 
+        leader = Leader(id=0)
+        leader.name = "Bill Gates"
+        leader.price = 50
+        leader.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed massa est, pellentesque at eros vel, vestibulum imperdiet quam. Nam ullamcorper fermentum augue, nec eleifend lorem pulvinar elementum."
+
+        leader1 = Leader(id=1)
+        leader1.name = "Linus Torvalds"
+        leader1.price = 50
+        leader1.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed massa est, pellentesque at eros vel, vestibulum imperdiet quam. Nam ullamcorper fermentum augue, nec eleifend lorem pulvinar elementum."
+
+        leader2 = Leader(id=2)
+        leader2.name = "Richard Stallman"
+        leader2.price = 50
+        leader2.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed massa est, pellentesque at eros vel, vestibulum imperdiet quam. Nam ullamcorper fermentum augue, nec eleifend lorem pulvinar elementum."
+
+
         self.gameManager = GameManager()
         self.gameManager.structures.append(structure)
+
+        for i in range(2):
+            self.gameManager.leaders.append(leader)
+            self.gameManager.leaders.append(leader1)
+            self.gameManager.leaders.append(leader2)
+        self.gameManager.leaders.append(leader1)
 
         screen = QGScreen(app=self, opacity=0)
         # screen = CombatScreen(app=self, opacity=0)

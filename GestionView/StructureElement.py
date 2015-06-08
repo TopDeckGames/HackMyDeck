@@ -15,6 +15,7 @@ from kivy.properties import ObjectProperty
 from GestionView.BaseElement import BaseElement
 
 from StructureWidget.BaseWidget import BaseWidget
+from StructureWidget.RHWidget import RHWidget
 
 from Model.Structure import Structure
 
@@ -31,11 +32,12 @@ class StructureElement(BaseElement):
 
         super(StructureElement, self).__init__(**kwargs)
 
-        if self.structure.id == 1:
-            pass
+        if self.structure.id == 0:
+            widget = RHWidget
         else:
-            widget = BaseWidget()
+            widget = BaseWidget
 
+        widget = widget(sup=self.sup, size_hint=(1, 1), pos_hint={"left": 0, "top": 0})
         self.changeWidget(widget)
 
     def changeWidget(self, widget):

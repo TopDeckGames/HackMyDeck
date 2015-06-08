@@ -16,8 +16,11 @@ from kivy.properties import BooleanProperty, ListProperty, ObjectProperty
 class GameManager(Widget):
     user = ObjectProperty()
     decks = ListProperty([])
+
     cards = ListProperty([])
     structures = ListProperty([])
+    leaders = ListProperty([])
+
     loading = BooleanProperty(False)
 
     def __init__(self, **kwargs):

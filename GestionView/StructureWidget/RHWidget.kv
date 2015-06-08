@@ -1,0 +1,52 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<RHWidget>:
+    canvas.before:
+        Color:
+            rgba: 0.9, 0.9, 0.9, 1
+        Rectangle:
+            size: root.size
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+
+        RelativeLayout:
+            size_hint: (1, 0.1)
+
+            Button:
+                id: cmdFirst
+                text: "<<"
+                size_hint: (0.2, 1)
+                pos_hint: {"left": 0, "center_y": 0.5}
+                on_release: root.currentPage = 0
+
+            Button:
+                id: cmdPrev
+                text: "<"
+                size_hint: (0.2, 1)
+                pos_hint: {"center_x": 0.4, "center_y": 0.5}
+                on_release: root.currentPage = root.currentPage - 1
+
+            Button:
+                id: cmdNext
+                text: ">"
+                size_hint: (0.2, 1)
+                pos_hint: {"center_x": 0.6, "center_y": 0.5}
+                on_release: root.currentPage = root.currentPage + 1
+
+            Button:
+                id: cmdLast
+                text: ">>"
+                size_hint: (0.2, 1)
+                pos_hint: {"right": 1, "center_y": 0.5}
+                on_release: root.currentPage = root.nbPages
+
+        RelativeLayout:
+            id: leader1
+            size_hint: (1, 0.45)
+
+        RelativeLayout:
+            id: leader2
+            size_hint: (1, 0.45)

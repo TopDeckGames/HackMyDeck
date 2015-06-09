@@ -26,17 +26,19 @@ class RHWidget(BaseWidget):
     nbItems = 2
     currentPage = NumericProperty(0)
     nbPages = 1
+    leaders = []
 
     def __init__(self, **kwargs):
         super(RHWidget, self).__init__(**kwargs)
 
-        self.nbPages = len(self.sup.app.gameManager.leaders) / self.nbItems + (
-        len(self.sup.app.gameManager.leaders) / self.nbItems > 0)
+        self.getLeaders()
 
         self.bind(currentPage=self.changePage)
         self.currentPage = 1
 
     def changePage(self, *args):
+        self.getLeaders()
+
         self.currentPage = min(self.currentPage, self.nbPages)
         self.currentPage = max(self.currentPage, 1)
 
@@ -48,21 +50,36 @@ class RHWidget(BaseWidget):
         self.ids.leader1.clear_widgets()
         self.ids.leader2.clear_widgets()
 
-        if self.currentPage * 2 - 2 < len(self.sup.app.gameManager.leaders):
-            leader1 = Leader(self.sup.app.gameManager.leaders[self.currentPage * 2 - 2], size_hint=(1, 1))
+        if self.currentPage * 2 - 2 < len(self.leaders):
+            leader1 = Leader(self.leaders[self.currentPage * 2 - 2], size_hint=(1, 1))
             leader1.ids.cmdBuy.bind(on_release=lambda x: self.buy(leader1.leader.id))
             self.ids.leader1.add_widget(leader1)
 
-        if self.currentPage * 2 - 1 < len(self.sup.app.gameManager.leaders):
-            leader2 = Leader(self.sup.app.gameManager.leaders[self.currentPage * 2 - 1], size_hint=(1, 1))
+        if self.currentPage * 2 - 1 < len(self.leaders):
+            leader2 = Leader(self.leaders[self.currentPage * 2 - 1], size_hint=(1, 1))
             leader2.ids.cmdBuy.bind(on_release=lambda x: self.buy(leader2.leader.id))
             self.ids.leader2.add_widget(leader2)
+
+    def getLeaders(self):
+        self.leaders = []
+
+        for item in self.sup.app.gameManager.leaders:
+            exist = False
+            for item2 in self.sup.app.gameManager.user.leaders:
+                if item.id == item2.id:
+                    exist = True
+                    break
+
+            if not exist:
+                self.leaders.append(item)
+
+        self.nbPages = len(self.leaders) / self.nbItems + (len(self.leaders) / self.nbItems > 0)
 
     def buy(self, id):
         leader = None
         structure = None
 
-        for item in self.sup.app.gameManager.leaders:
+        for item in self.leaders:
             if item.id == id:
                 leader = item
                 break
@@ -102,3 +119,5 @@ class RHWidget(BaseWidget):
         # Todo : Achat de la carte auprès du serveur
         self.sup.app.gameManager.user.credits -= leader.price
         self.sup.app.gameManager.user.leaders.append(leader)
+
+        self.changePage()

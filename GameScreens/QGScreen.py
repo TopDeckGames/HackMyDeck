@@ -32,7 +32,6 @@ Builder.load_file("GameScreens/QGScreen.kv")
 class QGScreen(GameScreen):
     """Widget de l'ecran"""
 
-    credits = 150
     actions = [("Accueil", MapElement), ("Mes decks", DecksElement), ("Mes statistiques", StatsElement)]
     currentAction = None
 

@@ -30,6 +30,6 @@ class Leader(Widget):
 
         # Binding des données
         self.ids.title.text = self.leader.name
-        # self.ids.cost.text = str(self.leader.price)
+        self.ids.cost.text = "Coût : " + str(self.leader.price)
         self.ids.picture.source = "Images/Leaders/" + str(self.leader.id) + ".jpg"
         self.ids.description.text = self.leader.description

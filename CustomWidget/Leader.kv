@@ -17,26 +17,33 @@
             id: picture
             size_hint: (0.4, 1)
 
-        GridLayout:
-            cols: 1
+        BoxLayout:
+            orientation: "vertical"
             size_hint: (0.6, 1)
 
             Label:
                 id: title
                 font_size: "25sp"
                 color: [0, 0, 0, 1]
+                size_hint: (1, 0.2)
 
             RstDocument:
                 id: description
                 font_size: "15sp"
                 color: [0, 0, 0, 1]
+                size_hint: (1, 0.6)
 
             BoxLayout:
                 orientation: "horizontal"
+                size_hint: (1, 0.2)
 
                 Label:
+                    id: cost
+                    font_size: "15sp"
+                    color: [0, 0, 0, 1]
 
                 Button:
+                    id: cmdBuy
                     text: "Engager"
                     size_hint: (0.6, 0.6)
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}

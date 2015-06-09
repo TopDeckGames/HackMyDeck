@@ -17,6 +17,8 @@ from kivy.properties import ObjectProperty, BooleanProperty
 
 from Model.Structure import Structure
 
+from CustomWidget.DynImage import DynImage
+
 Builder.load_file("CustomWidget/StructureWidget.kv")
 
 class StructureWidget(Widget):

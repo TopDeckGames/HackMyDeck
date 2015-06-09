@@ -18,7 +18,7 @@ class User(SuperModel):
     id = NumericProperty(0)
     login = StringProperty()
     password = StringProperty()
-    credit = NumericProperty(0)
+    credits = NumericProperty(0)
     nbWin = NumericProperty(0)
     nbConnexion = NumericProperty(1)
     isAdmin = BooleanProperty()
@@ -26,6 +26,7 @@ class User(SuperModel):
     quests = ListProperty()
     skillTrees = ListProperty()
     structures = ListProperty()
+    leaders = ListProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

@@ -20,6 +20,7 @@ class GameManager(Widget):
     cards = ListProperty([])
     structures = ListProperty([])
     leaders = ListProperty([])
+    skillTrees = ListProperty()
 
     loading = BooleanProperty(False)
 

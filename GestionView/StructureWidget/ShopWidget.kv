@@ -1,0 +1,116 @@
+#:kivy 1.8
+#:import kivy kivy
+
+<ShopWidget>:
+    canvas.before:
+        Color:
+            rgba: 0.9, 0.9, 0.9, 1
+        Rectangle:
+            size: root.size
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+
+        RelativeLayout:
+            size_hint: (1, 0.1)
+
+            Button:
+                id: cmdFirst
+                text: "<<"
+                size_hint: (0.2, 1)
+                pos_hint: {"left": 0, "center_y": 0.5}
+                on_release: root.currentPage = 0
+
+            Button:
+                id: cmdPrev
+                text: "<"
+                size_hint: (0.2, 1)
+                pos_hint: {"center_x": 0.4, "center_y": 0.5}
+                on_release: root.currentPage = root.currentPage - 1
+
+            Button:
+                id: cmdNext
+                text: ">"
+                size_hint: (0.2, 1)
+                pos_hint: {"center_x": 0.6, "center_y": 0.5}
+                on_release: root.currentPage = root.currentPage + 1
+
+            Button:
+                id: cmdLast
+                text: ">>"
+                size_hint: (0.2, 1)
+                pos_hint: {"right": 1, "center_y": 0.5}
+                on_release: root.currentPage = root.nbPages
+
+        GridLayout:
+            id: cards
+            cols: 3
+            size_hint: (1, 0.9)
+
+            RelativeLayout:
+                id: card1
+
+            RelativeLayout:
+                id: card2
+
+            RelativeLayout:
+                id: card3
+
+            RelativeLayout:
+                id: card4
+
+            RelativeLayout:
+                id: card5
+
+            RelativeLayout:
+                id: card6
+
+<ShopPopup>:
+    title: "Acheter une carte"
+    size_hint: (None, None)
+    size: ("500dp", "300dp")
+
+    BoxLayout:
+        orientation: "horizontal"
+
+        FloatLayout:
+            id: cardView
+            size_hint: (0.5, 1)
+
+        GridLayout:
+            cols: 1
+            size_hint: (0.5, 1)
+
+            Label:
+                text: root.card.title
+                font_size: "22sp"
+                size_hint: (1, 0.2)
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: (1, 0.8)
+
+                BoxLayout:
+                    orienation: "horizontal"
+                    size_hint: (1, 0.8)
+
+                    Label:
+                        text: "Coût : "
+
+                    Label:
+                        text: str(root.card.costInStore)
+
+                BoxLayout:
+                    orienation: "horizontal"
+                    size_hint: (1, 0.2)
+
+                    Button:
+                        text: "Fermer"
+                        size_hint: (0.5, 1)
+                        on_release: root.dismiss()
+
+                    Button:
+                        text: "Acheter"
+                        size_hint: (0.5, 1)
+                        on_release: root.buy()

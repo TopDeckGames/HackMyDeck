@@ -16,6 +16,7 @@ class Game(SuperModel):
     totalDammage = NumericProperty()
     totalUnit = NumericProperty()
     totalTechno = NumericProperty()
+    enhancement = NumericProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

@@ -4,110 +4,118 @@
 <Card>:
     size: ("180dp", "250dp")
 
-    StackLayout:
-        id: container
-        orientation: "lr-tb"
-        size: (root.size[0], root.size[1])
-        padding: ["10dp", 0, "10dp", 0]
-        spacing: [0, 0]
-
-        GridLayout:
-            id: header
-            cols: 2
-            size_hint: (1, 0)
-            height: container.size[1] * 0.1
-
-            Label:
-                id: title
-                size_hint: (.9, 1)
-                color: [0, 0, 0, 1]
-                font_size: "18sp"
-                bold: True
-                halign: "left"
-
-            Label:
-                id: cost
-                size_hint: (.1, 1)
-                color: [0, 0, 0, 1]
-
-        Image:
-            id: picture
-            size_hint: (1, 0)
+    FloatLayout:
+        AsyncImage:
+            id: background
+            size: root.size
             keep_ratio: False
             allow_stretch: True
-            height: container.size[1] * 0.4
+            pos: (0, 0)
 
-        BoxLayout:
-            id: type
-            size_hint: (1, 0)
-            height: container.size[1] * 0.05
-            orientation: "horizontal"
+        StackLayout:
+            id: container
+            orientation: "lr-tb"
+            size: (root.size[0], root.size[1])
+            padding: ["10dp", 0, "10dp", 0]
+            spacing: [0, 0]
 
-        BoxLayout:
-            id: center
+            GridLayout:
+                id: header
+                cols: 2
+                size_hint: (1, 0)
+                height: container.size[1] * 0.1
 
-            canvas:
-                Color:
-                    rgba: 0, 0, 0, 1
-                Line:
-                    points: [center.pos[0] - 5, center.pos[1], center.pos[0] - 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1], center.pos[0] - 5, center.pos[1]]
-                    width: 1
+                Label:
+                    id: title
+                    size_hint: (.9, 1)
+                    color: [0, 0, 0, 1]
+                    font_size: "18sp"
+                    bold: True
+                    halign: "left"
 
-            size_hint: (1, 0)
-            height: container.size[1] * 0.35
-            orientation: "vertical"
+                Label:
+                    id: cost
+                    size_hint: (.1, 1)
+                    color: [0, 0, 0, 1]
 
-            Label:
-                text: "Description"
-                bold: True
-                font_size: "13sp"
-                color: [0, 0, 0, 1]
-                text_size: (center.size[0], center.size[1] * 0.15)
-                halign: "left"
+            AsyncImage:
+                id: picture
+                size_hint: (1, 0)
+                keep_ratio: False
+                allow_stretch: True
+                height: container.size[1] * 0.4
 
-            Label:
-                id: description
-                text_size: (center.size[0], center.size[1] * 0.35)
-                font_size: "12sp"
-                color: [0, 0, 0, 1]
-                halign: "justify"
-                valign: "middle"
+            BoxLayout:
+                id: type
+                size_hint: (1, 0)
+                height: container.size[1] * 0.05
+                orientation: "horizontal"
 
-            Label:
-                text: "Effets"
-                bold: True
-                font_size: "13sp"
-                color: [0, 0, 0, 1]
-                text_size: (center.size[0], center.size[1] * 0.15)
-                halign: "left"
+            BoxLayout:
+                id: center
 
-            Label:
-                id: effects
-                text_size: (center.size[0], center.size[1] * 0.35)
-                font_size: "12sp"
-                color: [0, 0, 0, 1]
-                halign: "justify"
-                valign: "middle"
+                canvas:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        points: [center.pos[0] - 5, center.pos[1], center.pos[0] - 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1] + center.size[1], center.pos[0] + center.size[0] + 5, center.pos[1], center.pos[0] - 5, center.pos[1]]
+                        width: 1
 
-        GridLayout:
-            id: footer
-            size_hint: (1, 0)
-            height: container.size[1] * 0.1
-            cols: 2
-            spacing: footer.size[0] * 0.8
+                size_hint: (1, 0)
+                height: container.size[1] * 0.35
+                orientation: "vertical"
 
-            Label:
-                text: "5"
-                text_size: (footer.size[0] * 0.1, footer.size[1])
-                bold: True
-                halign: "center"
-                valign: "middle"
-                color: [0, 0, 0, 1]
+                Label:
+                    text: "Description"
+                    bold: True
+                    font_size: "13sp"
+                    color: [0, 0, 0, 1]
+                    text_size: (center.size[0], center.size[1] * 0.15)
+                    halign: "left"
 
-            Label:
-                text: "5"
-                text_size: (footer.size[0] * 0.1, footer.size[1])
-                bold: True
-                halign: "center"
-                valign: "middle"
-                color: [0, 0, 0, 1]
+                Label:
+                    id: description
+                    text_size: (center.size[0], center.size[1] * 0.35)
+                    font_size: "12sp"
+                    color: [0, 0, 0, 1]
+                    halign: "justify"
+                    valign: "middle"
+
+                Label:
+                    text: "Effets"
+                    bold: True
+                    font_size: "13sp"
+                    color: [0, 0, 0, 1]
+                    text_size: (center.size[0], center.size[1] * 0.15)
+                    halign: "left"
+
+                Label:
+                    id: effects
+                    text_size: (center.size[0], center.size[1] * 0.35)
+                    font_size: "12sp"
+                    color: [0, 0, 0, 1]
+                    halign: "justify"
+                    valign: "middle"
+
+            GridLayout:
+                id: footer
+                size_hint: (1, 0)
+                height: container.size[1] * 0.1
+                cols: 2
+                spacing: footer.size[0] * 0.8
+
+                Label:
+                    text: "5"
+                    text_size: (footer.size[0] * 0.1, footer.size[1])
+                    bold: True
+                    halign: "center"
+                    valign: "middle"
+                    color: [0, 0, 0, 1]
+
+                Label:
+                    text: "5"
+                    text_size: (footer.size[0] * 0.1, footer.size[1])
+                    bold: True
+                    halign: "center"
+                    valign: "middle"
+                    color: [0, 0, 0, 1]

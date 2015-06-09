@@ -16,6 +16,7 @@ from GestionView.BaseElement import BaseElement
 
 from StructureWidget.BaseWidget import BaseWidget
 from StructureWidget.RHWidget import RHWidget
+from StructureWidget.ShopWidget import ShopWidget
 
 from Model.Structure import Structure
 
@@ -34,6 +35,8 @@ class StructureElement(BaseElement):
 
         if self.structure.id == 0:
             widget = RHWidget
+        elif self.structure.id == 1:
+            widget = ShopWidget
         else:
             widget = BaseWidget
 

@@ -15,6 +15,7 @@ from Manager.GameManager import GameManager
 from Model.Structure import Structure
 from Model.Leader import Leader
 from Model.User import User
+from Model.Card import Card
 
 class TestWidget(Widget):
     def __init__(self, **kwargs):
@@ -25,6 +26,14 @@ class TestWidget(Widget):
         structure.pos["right"] = 62.29
         structure.pos["top"] = 42.04
         structure.pos["bottom"] = 60.46
+
+        structure1 = Structure(id=1, level=1)
+        structure1.pos["left"] = 5
+        structure1.pos["right"] = 30
+        structure1.pos["top"] = 42.04
+        structure1.pos["bottom"] = 60.46
+
+        card = Card(id=0, title="Test", description="Ceci est une carte de test", isBuyable=True)
 
         leader = Leader(id=0)
         leader.name = "Bill Gates"
@@ -43,10 +52,19 @@ class TestWidget(Widget):
 
         user = User(credits=150)
         user.structures.append(structure)
+        user.structures.append(structure1)
 
         self.gameManager = GameManager()
         self.gameManager.user = user
         self.gameManager.structures.append(structure)
+        self.gameManager.structures.append(structure1)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
+        self.gameManager.cards.append(card)
 
         for i in range(2):
             self.gameManager.leaders.append(leader)

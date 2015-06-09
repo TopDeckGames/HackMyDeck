@@ -37,6 +37,7 @@ class RHWidget(BaseWidget):
         self.currentPage = 1
 
     def changePage(self, *args):
+        self.unbind(currentPage=self.changePage)
         self.getLeaders()
 
         self.currentPage = min(self.currentPage, self.nbPages)
@@ -59,6 +60,8 @@ class RHWidget(BaseWidget):
             leader2 = Leader(self.leaders[self.currentPage * 2 - 1], size_hint=(1, 1))
             leader2.ids.cmdBuy.bind(on_release=lambda x: self.buy(leader2.leader.id))
             self.ids.leader2.add_widget(leader2)
+
+        self.bind(currentPage=self.changePage)
 
     def getLeaders(self):
         self.leaders = []

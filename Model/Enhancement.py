@@ -5,7 +5,7 @@ import kivy
 
 kivy.require('1.8.0')
 
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, BooleanProperty
 
 from Model.SuperModel import SuperModel
 
@@ -21,6 +21,8 @@ class Enhancement(SuperModel):
     effect = StringProperty()
     cost = NumericProperty()
     time = NumericProperty()
+    state = BooleanProperty(False)
+    idPrev = NumericProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

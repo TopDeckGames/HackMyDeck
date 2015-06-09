@@ -14,9 +14,7 @@ kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
 from kivy.uix.scatter import Scatter
-from kivy.graphics.instructions import InstructionGroup
 from kivy.properties import ObjectProperty, BooleanProperty
-from kivy.graphics import Rectangle
 
 from Model.Card import Card as ModelCard
 
@@ -28,7 +26,6 @@ class Card(Scatter):
 
     card = ObjectProperty()
     visible = BooleanProperty(False)
-    background = InstructionGroup()
 
     def __init__(self, card, **kwargs):
         if not isinstance(card, ModelCard):
@@ -70,19 +67,11 @@ class Card(Scatter):
         self.do_translation = True
 
     def show(self, *args):
-
-        self.ids.container.canvas.remove(self.background)
-        self.background.clear()
-
         if self.visible:
-            texture = "Images/Cards/front.jpg"
+            self.ids.background.source = "Images/Cards/front.jpg"
             for element in self.ids.container.children:
                 element.opacity = 1
         else:
-            texture = "Images/Cards/back.jpg"
+            self.ids.background.source = "Images/Cards/back.jpg"
             for element in self.ids.container.children:
                 element.opacity = 0
-
-        self.background.add(Rectangle(source=texture, pos=self.ids.container.pos, size=self.size))
-
-        self.ids.container.canvas.insert(0, self.background)

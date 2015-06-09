@@ -5,7 +5,7 @@ import kivy
 
 kivy.require('1.8.0')
 
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, ListProperty
 
 from Model.SuperModel import SuperModel
 
@@ -19,6 +19,7 @@ class Enhancement(SuperModel):
     label = StringProperty()
     type = StringProperty()
     effectifs = NumericProperty()
+    enhancements = ListProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

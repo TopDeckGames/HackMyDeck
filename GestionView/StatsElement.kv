@@ -2,3 +2,46 @@
 #:import kivy kivy
 
 <StatsElement>:
+    ScrollView:
+        size: root.size
+        pos: root.pos
+
+        GridLayout:
+            id: container
+            cols: 1
+            spacing: "10dp"
+            padding: (30, 0)
+
+<GameElement>:
+    canvas.after:
+        Color:
+            rgba: root.color
+        Line:
+            points: [root.pos[0], root.pos[1], root.pos[0], root.pos[1] + root.height, root.pos[0] + root.width, root.pos[1] + root.height, root.pos[0] + root.width, root.pos[1], root.pos[0], root.pos[1]]
+            width: 1
+    canvas.before:
+        Color:
+            rgba: 0.9, 0.9, 0.9, 1
+        Rectangle:
+            size: root.size
+            pos: root.pos
+
+    BoxLayout:
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+
+        Label:
+            size_hint: (0.2, 1)
+            text: root.date
+            color: [0, 0, 0, 1]
+
+        Label:
+            size_hint: (0.2, 1)
+            text: root.game.opponent
+            color: [0, 0, 0, 1]
+
+        Label:
+            size_hint: (0.2, 1)
+            text: "Statut : " + ("Victoire" if root.game.victory else "Défaite")
+            color: [0, 0, 0, 1]

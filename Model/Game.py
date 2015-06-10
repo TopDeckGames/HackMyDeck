@@ -5,7 +5,7 @@ import kivy
 
 kivy.require('1.8.0')
 
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, BooleanProperty, StringProperty
 
 from Model.SuperModel import SuperModel
 
@@ -16,7 +16,8 @@ class Game(SuperModel):
     totalDammage = NumericProperty()
     totalUnit = NumericProperty()
     totalTechno = NumericProperty()
-    enhancement = NumericProperty()
+    victory = BooleanProperty(False)
+    opponent = StringProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

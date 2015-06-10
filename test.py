@@ -16,6 +16,7 @@ from Model.Structure import Structure
 from Model.Leader import Leader
 from Model.User import User
 from Model.Card import Card
+from Model.Game import Game
 
 class TestWidget(Widget):
     def __init__(self, **kwargs):
@@ -50,9 +51,17 @@ class TestWidget(Widget):
         leader2.price = 50
         leader2.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed massa est, pellentesque at eros vel, vestibulum imperdiet quam. Nam ullamcorper fermentum augue, nec eleifend lorem pulvinar elementum."
 
-        user = User(credits=150)
+        game = Game(id=0, victory=True, opponent="Jean-Kevin", created=1433939136)
+
+        game1 = Game(id=1, victory=False, opponent="Sasuke_du_16", created=1433939136)
+
+        user = User(credits=150, login="DarkKikoo75")
         user.structures.append(structure)
         user.structures.append(structure1)
+
+        for i in range(12):
+            user.games.append(game)
+            user.games.append(game1)
 
         self.gameManager = GameManager()
         self.gameManager.user = user

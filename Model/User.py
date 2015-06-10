@@ -22,11 +22,13 @@ class User(SuperModel):
     nbWin = NumericProperty(0)
     nbConnexion = NumericProperty(1)
     isAdmin = BooleanProperty()
+
     cards = DictProperty()
     quests = ListProperty()
     skillTrees = ListProperty()
     structures = ListProperty()
     leaders = ListProperty()
+    games = ListProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

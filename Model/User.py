@@ -24,6 +24,7 @@ class User(SuperModel):
     isAdmin = BooleanProperty()
 
     cards = DictProperty()
+    decks = ListProperty([])
     quests = ListProperty()
     skillTrees = ListProperty()
     structures = ListProperty()

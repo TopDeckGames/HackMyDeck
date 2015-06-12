@@ -95,8 +95,23 @@
 
                 size_hint: (0.5, 1)
 
-            BoxLayout:
+            RelativeLayout:
                 size_hint: (0.05, 1)
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: (1, None)
+                    height: "100dp"
+                    spacing: "20dp"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    Button:
+                        text: ">"
+                        size_hint: (1, 0.5)
+
+                    Button:
+                        text: "<"
+                        size_hint: (1, 0.5)
 
             BoxLayout:
                 canvas.after:
@@ -107,6 +122,16 @@
                         width: 1
 
                 size_hint: (0.25, 1)
+
+                ScrollView:
+                    size_hint: (1, 1)
+                    do_scroll_x: False
+
+                    GridLayout:
+                        id: deckCards
+                        cols: 1
+                        spacing: 20
+                        size_hint_y: None
 
 <LoadPopup>:
     title: "Charger un deck"
@@ -164,3 +189,8 @@
             text: "Créer"
             size_hint: (1, 1)
             on_release: root.create()
+
+<DeckCard>:
+    text: root.card.name
+    size_hint_y: None
+    height: 40

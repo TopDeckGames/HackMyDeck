@@ -9,12 +9,14 @@ import kivy
 kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty
 from kivy.uix.popup import Popup
+from kivy.uix.togglebutton import ToggleButton
 
 from GestionView.BaseElement import BaseElement
 
 from Model.Deck import Deck as ModelDeck
+from Model.Card import Card as ModelCard
 
 Builder.load_file("GestionView/DecksElement.kv")
 
@@ -26,6 +28,7 @@ class DecksElement(BaseElement):
         super(DecksElement, self).__init__(**kwargs)
 
         self.bind(deck=self.deckChange)
+        self.ids.deckCards.bind(minimum_height=self.ids.deckCards.setter('height'))
 
     def deckChange(self, *args):
         if not isinstance(self.deck, ModelDeck):
@@ -33,6 +36,9 @@ class DecksElement(BaseElement):
             raise Exception("Un objet de type deck est requis")
 
         self.ids.cmdSave.opacity = 1
+        for key, value in self.deck.cards:
+            item = DeckCard(key, value)
+            self.ids.deckCards.add_widget(item)
 
     def showLoadingPopup(self, *args):
         popup = LoadPopup(sup=self.sup)
@@ -105,3 +111,17 @@ class CreatePopup(Popup):
         self.sup.app.gameManager.user.decks.append(deck)
 
         self.dismiss()
+
+
+class DeckCard(ToggleButton):
+    card = ObjectProperty()
+    number = NumericProperty()
+
+    def __init__(self, card, number, **kwargs):
+        if not isinstance(card, ModelCard):
+            raise Exception("Un objet de typde card est requis")
+
+        self.card = card
+        self.number = number
+
+        super(DeckCard, self).__init__(**kwargs)

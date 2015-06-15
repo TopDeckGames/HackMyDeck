@@ -31,6 +31,7 @@
                 size: ("200dp", "50dp")
                 size_hint: (None, None)
                 opacity: 0
+                on_release: root.save()
 
         BoxLayout:
             size_hint: (1, 0.9)
@@ -94,6 +95,16 @@
                         width: 1
 
                 size_hint: (0.5, 1)
+
+                ScrollView:
+                    size_hint: (1, 1)
+                    do_scroll_x: False
+
+                    GridLayout:
+                        id: userCards
+                        cols: 3
+                        spacing: 20
+                        size_hint_y: None
 
             RelativeLayout:
                 size_hint: (0.05, 1)

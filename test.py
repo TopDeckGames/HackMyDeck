@@ -58,6 +58,7 @@ class TestWidget(Widget):
         user = User(credits=150, login="DarkKikoo75")
         user.structures.append(structure)
         user.structures.append(structure1)
+        user.cards.append((card, 3))
 
         for i in range(12):
             user.games.append(game)

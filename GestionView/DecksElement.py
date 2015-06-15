@@ -18,6 +18,8 @@ from GestionView.BaseElement import BaseElement
 from Model.Deck import Deck as ModelDeck
 from Model.Card import Card as ModelCard
 
+from CustomWidget.Card import Card
+
 Builder.load_file("GestionView/DecksElement.kv")
 
 
@@ -29,6 +31,7 @@ class DecksElement(BaseElement):
 
         self.bind(deck=self.deckChange)
         self.ids.deckCards.bind(minimum_height=self.ids.deckCards.setter('height'))
+        self.ids.userCards.bind(minimum_height=self.ids.userCards.setter('height'))
 
     def deckChange(self, *args):
         if not isinstance(self.deck, ModelDeck):
@@ -36,9 +39,13 @@ class DecksElement(BaseElement):
             raise Exception("Un objet de type deck est requis")
 
         self.ids.cmdSave.opacity = 1
-        for key, value in self.deck.cards:
-            item = DeckCard(key, value)
+        for value in self.deck.cards:
+            item = DeckCard(value[0], value[1])
             self.ids.deckCards.add_widget(item)
+
+        for value in self.sup.app.gameManager.user.cards:
+            item = Card(value[0], size_hint=(0.3, 1))
+            self.ids.userCards.add_widget(item)
 
     def showLoadingPopup(self, *args):
         popup = LoadPopup(sup=self.sup)
@@ -54,6 +61,8 @@ class DecksElement(BaseElement):
             self.deck = popup.deck
             self.canvas.ask_update()
 
+    def save(self, *args):
+        pass
 
 class LoadPopup(Popup):
     sup = ObjectProperty()

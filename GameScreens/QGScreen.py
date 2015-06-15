@@ -85,7 +85,7 @@ class QGScreen(GameScreen):
         if self.ids.cmdAttack.text != "Annuler":
             self.deckSelect = Spinner(id="deckSelect", size_hint=(0.7, 1))
 
-            for deck in self.app.gameManager.decks:
+            for deck in self.app.gameManager.user.decks:
                 self.deckSelect.values.append(deck.name)
 
             button = Button(text="Lancer", size_hint=(0.3, 1))

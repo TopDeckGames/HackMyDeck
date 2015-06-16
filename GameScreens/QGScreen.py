@@ -32,6 +32,7 @@ from TcpCommunication.Manager import Manager
 from Manager.GameManager import GameManager
 
 import struct
+import time
 
 Builder.load_file("GameScreens/QGScreen.kv")
 
@@ -52,6 +53,8 @@ class QGScreen(GameScreen):
             sData = struct.Struct("<i")
             data = sData.pack(*[GameManager.user.id])
             self.app.tcpManager.tcpClient.sendBytes(data)
+
+            time.sleep(0.5)
 
             self.app.gameManager.load(self.app)
         except Exception as ex:

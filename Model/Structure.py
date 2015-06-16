@@ -15,7 +15,7 @@ class Structure(SuperModel):
 
     id = NumericProperty(0)
     name = StringProperty()
-    type = StringProperty()
+    type = NumericProperty()
     description = StringProperty()
     level = NumericProperty(0)
     effectif = NumericProperty()

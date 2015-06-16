@@ -9,3 +9,6 @@ class StringHelper:
             str += self.SEPARATOR
 
         return str
+
+    def GetRealString(self, str):
+        return str.split(self.SEPARATOR)[0]

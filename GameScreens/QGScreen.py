@@ -27,6 +27,13 @@ from GestionView.StatsElement import StatsElement
 
 from Controllers.GestionController import GestionController
 
+from TcpCommunication.Manager import Manager
+
+from Manager.GameManager import GameManager
+
+import struct
+import time
+
 Builder.load_file("GameScreens/QGScreen.kv")
 
 class QGScreen(GameScreen):
@@ -39,15 +46,18 @@ class QGScreen(GameScreen):
         super(QGScreen, self).__init__(**kwargs)
 
         # A l'arrivée sur l'écran de gestion on se connecte au serveur attribué
-        # try:
-        #    self.app.tcpManager.close()
-        #    self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
+        try:
+            self.app.tcpManager.close()
+            self.app.tcpManager.connect(Manager.SERVEUR_GESTION)
 
-        #    sData = struct.Struct("<i")
-        #    data = sData.pack(*[GameManager.user.id])
-        #    self.app.tcpManager.tcpClient.sendBytes(data)
-        # except Exception as ex:
-        #    self.showError(ex)
+            sData = struct.Struct("<i")
+            data = sData.pack(*[GameManager.user.id])
+            self.app.tcpManager.tcpClient.sendBytes(data)
+
+            self.app.gameManager.load(self.app)
+
+        except Exception as ex:
+            self.showError(ex)
 
         self.currentAction = self.actions[0]
         self.changeElement(self.currentAction[1])

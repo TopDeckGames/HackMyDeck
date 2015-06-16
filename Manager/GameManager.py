@@ -10,7 +10,9 @@ kivy.require('1.8.0')
 
 from kivy.uix.widget import Widget
 
-from kivy.properties import BooleanProperty, ListProperty, ObjectProperty
+from kivy.properties import BooleanProperty, ListProperty, ObjectProperty, NumericProperty
+
+from Controllers.UserController import UserController
 
 
 class GameManager(Widget):
@@ -23,5 +25,18 @@ class GameManager(Widget):
 
     loading = BooleanProperty(False)
 
+    nbLoading = NumericProperty(0)
+
     def __init__(self, **kwargs):
         super(GameManager, self).__init__(**kwargs)
+
+        self.bind(nbLoading=self.isLoading)
+
+    def load(self, app):
+        userCtrl = UserController(app=app)
+
+        self.nbLoading += 1
+        userCtrl.getInfos()
+
+    def isLoading(self, *args):
+        self.loading = self.nbLoading > 0

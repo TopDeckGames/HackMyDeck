@@ -13,7 +13,6 @@ from TcpCommunication.TcpRequest import TcpRequest
 from TcpCommunication.Manager import Manager
 from Model.User import User
 from Helper.StringHelper import StringHelper
-from Manager.GameManager import GameManager
 
 
 class UserController(BaseController):
@@ -54,6 +53,8 @@ class UserController(BaseController):
                 try:
                     #On récupère les informations du joueur
                     response = struct.unpack('iH', data[:6])
+
+                    from Manager.GameManager import GameManager
 
                     GameManager.user = User()
                     GameManager.user.id = response[0]
@@ -121,6 +122,39 @@ class UserController(BaseController):
         else:
             self.app.gameScreen.displayMessage("Inscription impossible", "Avertissement")
 
+    def getInfos(self):
+        req = TcpRequest(Manager.MESSAGE_LENGTH)
+        req.setManager(1)  # Identifiant du controlleur
+        req.addData("H", 4)  # Identifiant de l'action
+
+        # Envoi
+        self.app.tcpManager.tcpClient.send(req, self.callback3)
+
+    def getInfosResp(self, state, data):
+        # On vérifie qu'il n'y a pas eu d'erreur technique
+        if state == 1:
+            if self.verifyResponse(data[:4]):
+                data = data[4:]
+
+                try:
+                    # On récupère les informations du joueur
+                    response = struct.unpack('!50si', data)
+
+                    from Manager.GameManager import GameManager
+
+                    self.app.gameManager.user.login = StringHelper().GetRealString(response[0])
+                    self.app.gameManager.user.credits = response[1]
+
+                    self.app.gameManager.nbLoading -= 1
+
+                except Exception as ex:
+                    raise Exception("Impossible de lire les données : " + ex.message)
+            else:
+                raise Exception("La récupèration des informations a échoué")
+        else:
+            raise Exception("La récupèration des informations a échoué")
+
     # Variables contenant les fonction réponse
     callback1 = connexionResp
     callback2 = registerResp
+    callback3 = getInfosResp

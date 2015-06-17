@@ -130,6 +130,7 @@ class UserController(BaseController):
         self.app.tcpManager.tcpClient.send(req, self.callback3)
 
     def getInfosResp(self, state, data):
+        print "Infos"
         # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
             if self.verifyResponse(data[:4]):

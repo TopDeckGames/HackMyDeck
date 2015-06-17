@@ -33,6 +33,8 @@ class RequestHandler(Thread):
     def run(self):
         while (self.running):
             if len(self.tcpListener.buffer) >= self.message_length:
+                print "Message"
+
                 # Récupèration de l'entête
                 message = self.tcpListener.buffer[:self.message_length]
                 self.tcpListener.buffer = self.tcpListener.buffer[self.message_length:]

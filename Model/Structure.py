@@ -4,7 +4,7 @@
 import kivy
 kivy.require('1.8.0')
 
-from kivy.properties import StringProperty, NumericProperty, DictProperty
+from kivy.properties import StringProperty, NumericProperty, DictProperty, BooleanProperty
 
 from Model.SuperModel import SuperModel
 
@@ -19,6 +19,7 @@ class Structure(SuperModel):
     description = StringProperty()
     level = NumericProperty(0)
     effectif = NumericProperty()
+    locked = BooleanProperty()
     pos = DictProperty()
 
     def __init__(self, **kwargs):

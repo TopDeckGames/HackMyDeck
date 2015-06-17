@@ -76,7 +76,6 @@ class QGScreen(GameScreen):
         else:
             element = element(opt, sup=self)
 
-
         if not isinstance(element, BaseElement):
             raise Exception("L'objet n'est pas un élément de vue valide")
 

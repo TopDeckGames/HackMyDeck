@@ -23,7 +23,7 @@ class User(SuperModel):
     nbConnexion = NumericProperty(1)
     isAdmin = BooleanProperty()
 
-    cards = ListProperty()
+    cards = DictProperty()
     decks = ListProperty([])
     quests = ListProperty()
     skillTrees = ListProperty()

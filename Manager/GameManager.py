@@ -13,7 +13,9 @@ from kivy.uix.widget import Widget
 from kivy.properties import BooleanProperty, ListProperty, ObjectProperty, NumericProperty
 
 from Controllers.UserController import UserController
-from Controllers.StrucureController import StructureController
+from Controllers.StructureController import StructureController
+from Controllers.CardController import CardController
+
 
 class GameManager(Widget):
     user = ObjectProperty()
@@ -24,7 +26,6 @@ class GameManager(Widget):
     skillTrees = ListProperty()
 
     loading = BooleanProperty(False)
-
     nbLoading = NumericProperty(0)
 
     def __init__(self, **kwargs):
@@ -35,12 +36,18 @@ class GameManager(Widget):
     def load(self, app):
         userCtrl = UserController(app=app)
         structureCtrl = StructureController(app=app)
+        cardCtrl = CardController(app=app)
 
         self.nbLoading += 1
         userCtrl.getInfos()
 
-        self.nbLoading += 1
+        self.nbLoading += 2
         structureCtrl.getStructures()
+        structureCtrl.getUserStructures()
+
+        self.nbLoading += 2
+        cardCtrl.getCards()
+        cardCtrl.getUserCards()
 
     def isLoading(self, *args):
         self.loading = self.nbLoading > 0

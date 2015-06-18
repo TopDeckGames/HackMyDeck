@@ -53,8 +53,9 @@ class GameManager(Widget):
         cardCtrl.getCards()
         cardCtrl.getUserCards()
 
-        self.nbLoading += 1
+        self.nbLoading += 2
         leaderCtrl.getLeaders()
+        leaderCtrl.getUserLeaders()
 
         self.nbLoading += 1
         deckCtrl.getDecks()

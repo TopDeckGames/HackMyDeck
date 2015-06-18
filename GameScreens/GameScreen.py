@@ -53,3 +53,6 @@ class GameScreen(Widget):
 
         self.clear_widgets()
         self.add_widget(error)
+
+    def askReload(self):
+        self.canvas.ask_update()

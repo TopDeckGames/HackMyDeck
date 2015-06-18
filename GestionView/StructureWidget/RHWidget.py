@@ -20,6 +20,8 @@ from CustomWidget.Leader import Leader
 from Model.Leader import Leader as ModelLeader
 from Model.Structure import Structure as ModelStructure
 
+from Controllers.LeaderController import LeaderController
+
 Builder.load_file("GestionView/StructureWidget/RHWidget.kv")
 
 class RHWidget(BaseWidget):
@@ -119,8 +121,5 @@ class RHWidget(BaseWidget):
             popup.open()
             return
 
-        # Todo : Achat de la carte auprès du serveur
-        self.sup.app.gameManager.user.credits -= leader.price
-        self.sup.app.gameManager.user.leaders.append(leader)
-
-        self.changePage()
+        leaderCtrl = LeaderController(app=self.sup.app)
+        leaderCtrl.buyLeader(leader.id)

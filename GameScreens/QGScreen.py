@@ -54,7 +54,7 @@ class QGScreen(GameScreen):
             data = sData.pack(*[GameManager.user.id])
             self.app.tcpManager.tcpClient.sendBytes(data)
 
-            time.sleep(0.5)
+            time.sleep(1)
 
             self.app.gameManager.load(self.app)
         except Exception as ex:

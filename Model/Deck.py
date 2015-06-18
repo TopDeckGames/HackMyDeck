@@ -5,7 +5,7 @@ import kivy
 
 kivy.require('1.8.0')
 
-from kivy.properties import StringProperty, NumericProperty, ListProperty, ObjectProperty
+from kivy.properties import StringProperty, NumericProperty, DictProperty
 
 from Model.SuperModel import SuperModel
 
@@ -17,8 +17,8 @@ class Deck(SuperModel):
     id = NumericProperty(0)
     name = StringProperty()
     color = StringProperty()
-    cards = ListProperty()
-    leader = ObjectProperty()
+    cards = DictProperty()
+    leader = NumericProperty()
 
     def __init__(self, **kwargs):
         super(type(self), self).__init__(**kwargs)

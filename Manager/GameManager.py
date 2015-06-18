@@ -15,7 +15,8 @@ from kivy.properties import BooleanProperty, ListProperty, ObjectProperty, Numer
 from Controllers.UserController import UserController
 from Controllers.StructureController import StructureController
 from Controllers.CardController import CardController
-
+from Controllers.LeaderController import LeaderController
+from Controllers.DeckController import DeckController
 
 class GameManager(Widget):
     user = ObjectProperty()
@@ -37,9 +38,12 @@ class GameManager(Widget):
         userCtrl = UserController(app=app)
         structureCtrl = StructureController(app=app)
         cardCtrl = CardController(app=app)
+        leaderCtrl = LeaderController(app=app)
+        deckCtrl = DeckController(app=app)
 
-        self.nbLoading += 1
+        self.nbLoading += 2
         userCtrl.getInfos()
+        userCtrl.getHistory()
 
         self.nbLoading += 2
         structureCtrl.getStructures()
@@ -48,6 +52,12 @@ class GameManager(Widget):
         self.nbLoading += 2
         cardCtrl.getCards()
         cardCtrl.getUserCards()
+
+        self.nbLoading += 1
+        leaderCtrl.getLeaders()
+
+        self.nbLoading += 1
+        deckCtrl.getDecks()
 
     def isLoading(self, *args):
         self.loading = self.nbLoading > 0

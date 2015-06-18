@@ -7,11 +7,13 @@ __version__ = '0.3'
 import hashlib
 import struct
 import socket
+from struct import *
 
 from Controllers.BaseController import BaseController
 from TcpCommunication.TcpRequest import TcpRequest
 from TcpCommunication.Manager import Manager
 from Model.User import User
+from Model.Game import Game
 from Helper.StringHelper import StringHelper
 
 
@@ -150,7 +152,45 @@ class UserController(BaseController):
         else:
             raise Exception("La récupèration des informations a échoué")
 
+    def getHistory(self):
+        req = TcpRequest(Manager.MESSAGE_LENGTH)
+        req.setManager(1)
+        req.addData("H", 5)
+
+        self.app.tcpManager.tcpClient.send(req, self.callback4)
+
+    def getHistoryResp(self, state, data):
+        # On vérifie qu'il n'y a pas eu d'erreur technique
+        if state == 1:
+            if self.verifyResponse(data[:4]):
+                data = data[4:]
+                try:
+                    from Manager.GameManager import GameManager
+
+                    # On récupère les informations des games
+                    while len(data) >= calcsize("!i50siii?"):
+                        response = struct.unpack('!i50siii?', data)
+
+                        game = Game()
+                        game.id = response[0]
+                        game.opponent = response[1]
+                        game.created = response[2]
+                        game.victory = response[7]
+
+                        self.app.gameManager.user.games.append(game)
+
+                        data = data[calcsize("!i50siii?"):]
+
+                    self.app.gameManager.nbLoading -= 1
+                except Exception as ex:
+                    raise Exception("Impossible de lire les données : " + ex.message)
+            else:
+                raise Exception("La récupèration des informations a échoué")
+        else:
+            raise Exception("La récupèration des informations a échoué")
+
     # Variables contenant les fonction réponse
     callback1 = connexionResp
     callback2 = registerResp
     callback3 = getInfosResp
+    callback4 = getHistoryResp

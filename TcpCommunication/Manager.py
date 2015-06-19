@@ -7,7 +7,7 @@ from TcpCommunication.RequestHandler import RequestHandler
 
 
 class Manager:
-    SERVEUR_LOGIN = ("127.0.0.1", 3000)
+    SERVEUR_LOGIN = ("", 0)
     MESSAGE_LENGTH = 40
     SERVEUR_GESTION = None
 

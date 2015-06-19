@@ -67,6 +67,7 @@ class Game(App):
 
         self.Config = ConfigParser.ConfigParser()
         self.Config.read(config_path)
+        Manager.SERVEUR_LOGIN = (self.Config.get("Server", "ip"), int(self.Config.get("Server", "port")))
 
         from kivy.base import EventLoop
 

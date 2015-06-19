@@ -16,6 +16,8 @@ Builder.load_file("GestionView/StructureWidget/BaseWidget.kv")
 
 class BaseWidget(Widget):
     sup = ObjectProperty()
+    structure = ObjectProperty()
+    userStructure = ObjectProperty()
 
     def __init__(self, **kwargs):
         super(BaseWidget, self).__init__(**kwargs)

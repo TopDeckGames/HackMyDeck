@@ -132,14 +132,13 @@ class UserController(BaseController):
         self.app.tcpManager.tcpClient.send(req, self.callback3)
 
     def getInfosResp(self, state, data):
-        print "Infos"
         # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
             if self.verifyResponse(data[:4]):
                 data = data[4:]
                 try:
                     # On récupère les informations du joueur
-                    response = struct.unpack('!50si', data)
+                    response = struct.unpack('=50si', data)
                     from Manager.GameManager import GameManager
 
                     self.app.gameManager.user.login = StringHelper().GetRealString(response[0])
@@ -168,8 +167,8 @@ class UserController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des games
-                    while len(data) >= calcsize("!i50siii?"):
-                        response = struct.unpack('!i50siii?', data)
+                    while len(data) >= calcsize("=i50siii?"):
+                        response = struct.unpack('=i50siii?', data)
 
                         game = Game()
                         game.id = response[0]
@@ -179,7 +178,7 @@ class UserController(BaseController):
 
                         self.app.gameManager.user.games.append(game)
 
-                        data = data[calcsize("!i50siii?"):]
+                        data = data[calcsize("=i50siii?"):]
 
                     self.app.gameManager.nbLoading -= 1
                 except Exception as ex:

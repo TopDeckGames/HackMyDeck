@@ -13,10 +13,11 @@ import kivy
 kivy.require('1.8.0')
 
 from kivy.uix.widget import Builder
-from kivy.uix.popup import Popup
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 
 from GameScreen import GameScreen
 
@@ -135,3 +136,7 @@ class QGScreen(GameScreen):
 
     def defaultElement(self):
         return MapElement
+
+    def displayMessage(self, message, type):
+        popup = Popup(content=Label(text=message), title=type, size=("400dp", "300dp"))
+        popup.open()

@@ -43,4 +43,9 @@ class MapElement(BaseElement):
                 (100 - widget.structure.pos["bottom"]) * self.height / 100)
 
     def goToStructure(self, obj, val):
-        self.sup.changeElement(StructureElement, obj.structure)
+        for item in self.sup.app.gameManager.user.structures:
+            if item.id == obj.structure.id:
+                userStructure = item
+                break
+
+        self.sup.changeElement(StructureElement, (obj.structure, userStructure))

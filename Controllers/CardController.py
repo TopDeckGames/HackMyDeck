@@ -28,7 +28,6 @@ class CardController(BaseController):
         self.app.tcpManager.tcpClient.send(req, self.callback1)
 
     def getCardsResp(self, state, data):
-        print "Cards"
         # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
             if self.verifyResponse(data[:4]):
@@ -38,8 +37,8 @@ class CardController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des structures
-                    while len(data) >= calcsize("!i50s255siii?"):
-                        response = struct.unpack('!i50s255siii?', data)
+                    while len(data) >= calcsize("=i50s255siii?"):
+                        response = struct.unpack('=i50s255siii?', data[:calcsize("=i50s255siii?")])
 
                         card = Card()
                         card.id = response[0]
@@ -52,7 +51,7 @@ class CardController(BaseController):
 
                         self.app.gameManager.cards.append(card)
 
-                        data = data[calcsize("!i50s255siii?"):]
+                        data = data[calcsize("=i50s255siii?"):]
 
                     self.app.gameManager.nbLoading -= 1
 
@@ -72,7 +71,6 @@ class CardController(BaseController):
         self.app.tcpManager.tcpClient.send(req, self.callback2)
 
     def getUserCardsResp(self, state, data):
-        print "UserCards"
         # On vérifie qu'il n'y a pas eu d'erreur technique
         if state == 1:
             if self.verifyResponse(data[:4]):
@@ -82,12 +80,12 @@ class CardController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des structures
-                    while len(data) >= calcsize("!ii"):
-                        response = struct.unpack('!ii', data)
+                    while len(data) >= calcsize("=ii"):
+                        response = struct.unpack('=ii', data)
 
                         self.app.gameManager.user.cards[response[0]] = response[1]
 
-                        data = data[calcsize("!ii"):]
+                        data = data[calcsize("=ii"):]
 
                     self.app.gameManager.nbLoading -= 1
 

@@ -38,8 +38,8 @@ class LeaderController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des structures
-                    while len(data) >= calcsize("!i50s255sii50s"):
-                        response = struct.unpack('!i50s255sii50s', data)
+                    while len(data) >= calcsize("=i50s255sii50s"):
+                        response = struct.unpack('=i50s255sii50s', data[:calcsize("=i50s255sii50s")])
 
                         leader = Leader()
                         leader.id = response[0]
@@ -51,7 +51,7 @@ class LeaderController(BaseController):
 
                         self.app.gameManager.leaders.append(leader)
 
-                        data = data[calcsize("!i50s255sii50s"):]
+                        data = data[calcsize("=i50s255sii50s"):]
 
                     self.app.gameManager.nbLoading -= 1
 
@@ -80,12 +80,12 @@ class LeaderController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des leaders
-                    while len(data) >= calcsize("!i"):
-                        response = struct.unpack('!i', data)
+                    while len(data) >= calcsize("=i"):
+                        response = struct.unpack('=i', data)
 
                         self.app.gameManager.leaders.append(response[0])
 
-                        data = data[calcsize("!i"):]
+                        data = data[calcsize("=i"):]
 
                     self.app.gameManager.nbLoading -= 1
 

@@ -36,19 +36,19 @@ class DeckController(BaseController):
                     from Manager.GameManager import GameManager
 
                     # On récupère les informations des structures
-                    while len(data) >= calcsize("!iii"):
-                        response = struct.unpack('!iii', data)
+                    while len(data) >= calcsize("=iii"):
+                        response = struct.unpack('=iii', data)
 
                         deck = Deck()
                         deck.id = response[0]
                         deck.leader = response[1]
 
-                        data = data[calcsize("!iii"):]
+                        data = data[calcsize("=iii"):]
 
                         for i in range(response[2]):
-                            rep = struct.unpack('!ii', data)
+                            rep = struct.unpack('=ii', data)
                             deck.cards[rep[0]] = rep[1]
-                            data = data[calcsize("!ii"):]
+                            data = data[calcsize("=ii"):]
 
                         self.app.gameManager.user.decks.append(deck)
 

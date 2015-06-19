@@ -27,7 +27,7 @@
                 size_hint: (1, 0.1)
 
                 Label:
-                    text: "Level : " + str(root.structure.level)
+                    text: "Level : " + str(root.userStructure.level)
                     pos_hint: {"left": 0, "center_y": 0.5}
                     color: [0, 0, 0, 1]
                     font_size: "20sp"
@@ -46,11 +46,12 @@
 
                     text: "Améliorer"
                     pos_hint: {"right": 1, "top": 1}
-                    size_hint: (0.15, 0.5)
+                    size_hint: (0.20, 0.5)
                     font_size: "20sp"
                     background_color: [0.72, 0.72, 0.71, 1]
                     background_normal: ''
                     color: [0, 0, 0, 1]
+                    on_release: root.levelUpPopup()
 
             RelativeLayout:
                 id: container

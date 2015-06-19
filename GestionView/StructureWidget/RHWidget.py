@@ -71,7 +71,7 @@ class RHWidget(BaseWidget):
         for item in self.sup.app.gameManager.leaders:
             exist = False
             for item2 in self.sup.app.gameManager.user.leaders:
-                if item.id == item2.id:
+                if item.id == item2:
                     exist = True
                     break
 
@@ -82,7 +82,7 @@ class RHWidget(BaseWidget):
 
     def buy(self, id):
         leader = None
-        structure = None
+        structure = self.structure
 
         for item in self.leaders:
             if item.id == id:
@@ -93,21 +93,16 @@ class RHWidget(BaseWidget):
             raise Exception("Un objet de type leader est requis")
 
         for item in self.sup.app.gameManager.user.leaders:
-            if item.id == leader.id:
+            if item == leader.id:
                 popup = Popup(title="Attention", content=Label(text="Vous avez déjà engagé cette personne"),
                               size_hint=(0.3, 0.15))
                 popup.open()
                 return
 
-        for item in self.sup.app.gameManager.user.structures:
-            if item.id == 0:
-                structure = item
-                break
-
         if not isinstance(structure, ModelStructure):
             raise Exception("Un objet de type structure est requis")
 
-        if structure.level <= len(self.sup.app.gameManager.user.leaders):
+        if self.userStructure.level <= len(self.sup.app.gameManager.user.leaders):
             popup = Popup(title="Attention", content=Label(
                 text="Vous avez atteinds votre maximum de chefs d'équipe, \naméliorez le batiment pour en débloquer d'avantage"),
                           size_hint=(0.3, 0.15))
